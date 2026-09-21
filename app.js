@@ -30,7 +30,7 @@ function renderPlaces(filterCategory="all"){
 
         //点击事件
         marker.addEventListener('click',()=>{   
-            infoEL.textContent=`选中地点：${place.name}`;
+            infoEL.textContent=`Select location：${place.name}`;
         })
         mapEL.append(marker);
     }

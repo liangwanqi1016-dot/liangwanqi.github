@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>우리 캠퍼스의 인기 명소</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body class="page-index">
+        <header>
+            <h1>우리 캠퍼스의 인기 명소 세 곳</h1>
+            <p>이곳들은 제가 캠퍼스에서 가장 좋아하는 세 곳으로, 각 장소마다 이곳에서 보낸 시간의 추억이 깃들어 있습니다.</p>
+        </header>
+        <!-- 按钮 -->
+        <div class="filter-buttons">
+            <button data-type="all">all</button>
+            <button data-type="library">library</button>
+            <button data-type="sports">sports</button>
+            <button data-type="class">B333</button>
+        </div>
+        <main>
+            <section>
+                <h2>1. 중앙 도서관</h2>
+                <img src="library01.jpg" alt="library">
+                <p>조용히 공부하기에 완벽한 구석 자리인데, 매 학기 기말고사 기간에는 자리를 잡기가 어렵습니다.</p>
+                <p><a href="library.html">세부 사항을 확인하세요.</a></p>
+            </section>
+            <section>
+                <h2>2.B333</h2>
+                <img src="class01.jpg" alt="class">
+                <p>이곳은 배움의 공간이자 매주 수업이 열리는 곳이기도 합니다.</p>
+                <p><a href="class.html">세부 사항을 확인하세요.</a></p>
+            </section>
+            <section>
+                <h2>3. 운동장</h2>
+                <img src="sports01.jpg" alt="sports">
+                <p>저녁에 사람들이 축구를 하는 그 장소는 연례 학교 개교기념일 행사 때 가장 활기 넘치는 곳이기도 합니다.</p>
+                <p><a href="sports ground.html">세부 사항을 확인하세요.</a></p>
+            </section>
+        
+        <h3>권장 투어 순서</h3>
+        <p>B333👉운동장👉중앙 도서관</p>
+
+        <!-- map -->
+       <h1>Location Buttons and Google Map</h1>
+    <p>After selecting a location, the description and map marker will update simultaneously</p>
+    <nav id="buttons" aria-label="Location buttons"></nav>
+    <!-- Central Library -->
+    <section id="library" class="place">
+        <h2>Central Library</h2>
+        <p>A quiet place for reading books</p>
+    </section>
+    <!-- Classroom -->
+    <section id="class" class="place" hidden>
+        <h2>Classroom</h2>
+        <p>A quiet place for studying</p>
+    </section>
+    <!-- Sports Field -->
+    <section id="sports" class="place" hidden>
+        <h2>Sports Field</h2>
+        <p>A space to relax and exercise</p>
+    </section>
+
+    <iframe id="map" title="Google Map for selected location" width="600" height="320"
+     referrerpolicy="strict-origin" allowfullscreen></iframe>
+     <p><a id="map-link" target="_blank" rel="noopener">Open map in new tab</a></p>
+     <p>This is a search map for practice. For your assignment, use "Share → Embed map" after finding the actual location.</p>
+    
+     <p>저자 : 량완치</p>
+    <script src="app.js"></script>
+    </body>
+</html>

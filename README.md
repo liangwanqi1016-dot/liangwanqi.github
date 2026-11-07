@@ -44,17 +44,12 @@
 - 사이버캠퍼스에 이 GitHub 저장소 URL 제출 (마감은 과제 공지 확인).
 
 
-## 7주차 · 캠퍼스 한 끼 추천 게시판
+## 7주차 - 음식 추천 게시판
 
-- Render 서비스 URL: https://campus-meal-week7.onrender.com/
-- 관리자 진입: 로그인 → 상단 **관리 화면** 또는 https://campus-meal-week7.onrender.com/admin
-- 가입·로그인, 글 작성·본인 삭제·신고, 관리자 검색·신고 필터·글 삭제·차단/해제, 연습 데이터 생성·정리 기능을 포함합니다.
-- 주제 변경: 제목·질문·초대 문구·초록색 색상. 상세 실행 명령과 테스트 기록: [week7/README.md](week7/README.md).
-- 로컬: 두 계정 권한, CSRF, XSS 이스케이프, 신고·관리자 기능 및 DB 보존 검증 통과.
-- 온라인: Render Live 확인, 관리자 로그인·관리 화면·연습 데이터 생성·검색·정리·로그아웃 확인.
-- 관리자 ID/PW는 사이버캠퍼스 제출란에만 기재하며 공개하지 않습니다.
-- 무료 서비스는 첫 접속이 느릴 수 있고 재배포 시 SQLite 데이터가 초기화될 수 있습니다.
+학교 근처 음식 추천을 주제로 수업 예제의 제목, 문구와 색을 바꿨습니다.
+회원가입, 로그인, 글 작성과 삭제, 신고, 관리자 기능이 있습니다.
 
-![온라인 화면](week7/screenshots/week7-live.png)
-
-![관리 화면](week7/screenshots/week7-admin.png)
+- 사이트: https://campus-meal-week7.onrender.com/
+- [실행 방법과 확인한 내용](week7/README.md)
+- 관리자 로그인 후 위쪽의 관리 화면을 누르면 됩니다.
+- 관리자 ID/PW는 과제 제출란에 따로 적습니다.

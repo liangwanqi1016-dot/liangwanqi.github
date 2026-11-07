@@ -52,5 +52,21 @@ Render의 Environment에 `SECRET_KEY`(64자리 무작위 값), `WEEK7_ADMIN_USER
 - 로컬 자동 검증: 두 계정 가입/로그인, 잘못된 비밀번호와 중복 ID 거부, 공동 글 목록, 남의 글 삭제 403, CSRF 없는 POST 400, HTML 이스케이프, 신고·중복 신고 거부, 일반 계정 admin 403, 관리자 검색·신고 필터·삭제, 차단/해제, 연습 데이터 생성/정리 후 일반 데이터 유지, DB 재초기화 후 글 유지.
 - 로컬 사용자 DB는 기존 파일을 유지했습니다. 테스트는 별도 임시 DB를 사용했습니다.
 - AI 도움: 수업 제공 완성 예제 적용, 주제 변경, 테스트와 배포 준비.
-- Render 배포 URL 및 공개 화면 스크린샷은 실제 배포 확인 후 추가합니다.
+- Render 서비스: https://campus-meal-week7.onrender.com/
+
+관리자 화면: https://campus-meal-week7.onrender.com/admin (관리자 로그인 필요).
 - 관리자 접속: 서비스 URL에서 로그인 → 상단 관리 화면 또는 `/admin`. 관리자 ID/PW는 사이버캠퍼스에만 제출하고 공개 저장소에는 적지 않습니다.
+
+
+## 온라인 배포 확인
+- Render Free, Python 3.12.12, Root Directory `week7`, Build `pip install -r requirements.txt`.
+- Start: `python -m flask --app app init-db && python -m flask --app app ensure-admin && gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 2`.
+- 환경변수: SECRET_KEY, WEEK7_ADMIN_USERNAME, WEEK7_ADMIN_PASSWORD, APP_HTTPS=1, PYTHON_VERSION=3.12.12. 실제 비밀값은 공개하지 않습니다.
+- 온라인 확인: 관리자 로그인과 관리 화면, 연습 계정 2개·글 4개 생성, 내용 검색, 연습 데이터 정리 후 0개, 로그아웃.
+- 무료 서버는 비활동 시 잠들어 첫 접속이 느릴 수 있으며 재배포·재시작 시 SQLite 데이터가 초기화될 수 있습니다. 시작 명령은 DB 및 관리자 계정을 다시 준비합니다.
+
+![온라인 첫 화면](screenshots/week7-live.png)
+
+![관리자 검색과 연습 데이터](screenshots/week7-admin.png)
+
+![연습 데이터 정리 후](screenshots/week7-admin-clean.png)

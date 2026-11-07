@@ -293,38 +293,8 @@ def admin():
     return render_template(
         "admin.html", comments=rows, users=users, query=query, reported_only=reported_only,
         test_user_count=test_user_count, test_comment_count=test_comment_count,
-        test_credentials=session.pop("test_credentials", None),
         test_notice=session.pop("test_notice", None),
     )
-
-
-@app.post("/admin/test-data/create")
-def create_test_data():
-    require_admin()
-    db = get_db()
-    password = secrets.token_urlsafe(12)
-    password_hash = generate_password_hash(password)
-    samples = (
-        "[연습] 조용한 공강 장소를 추천해 주세요!",
-        "[연습] 오늘의 간식 후보: 붕어빵과 샌드위치",
-        "[연습] 광고처럼 반복되는 글을 찾을 수 있나요?",
-        "[연습] 친구와 함께 가고 싶은 학교 근처 장소",
-        "[연습] 점심 메뉴를 하나만 고른다면?",
-        "[연습] 이 글을 다른 계정으로 신고해 보세요.",
-    )
-    names = []
-    for label in ("a", "b"):
-        username = f"test_{label}_{secrets.token_hex(4)}"
-        cursor = db.execute(
-            "INSERT INTO users (username, password_hash, is_test) VALUES (?, ?, 1)",
-            (username, password_hash),
-        )
-        names.append(username)
-        for content in secrets.SystemRandom().sample(samples, 2):
-            db.execute("INSERT INTO comments (user_id, content) VALUES (?, ?)", (cursor.lastrowid, content))
-    db.commit()
-    session["test_credentials"] = {"names": names, "password": password}
-    return redirect(url_for("admin"))
 
 
 @app.post("/admin/test-data/delete")

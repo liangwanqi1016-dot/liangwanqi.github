@@ -58,3 +58,6 @@
 ![온라인 화면](week7/screenshots/week7-live.png)
 
 ![관리 화면](week7/screenshots/week7-admin.png)
+
+
+7주차 변경: 사용자 요청으로 연습 계정·글 자동 생성 버튼과 생성 API를 삭제했습니다. 기존 화면 자료는 변경 전 기록이며, 일반 게시판과 관리자 기능은 유지합니다.

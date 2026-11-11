@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나만의 취향 밸런스 게임</title>
+<link rel="stylesheet" href="food.css">
+</head>
+<body>
+<div class="container">
+  <h1>🍜 나만의 취향 밸런스 게임</h1>
+  <p class="subtitle">8문항으로 알아보는 나의 푸드 스타일</p>
+
+  <!-- 시작 화면 -->
+  <div id="screen-start" class="screen active">
+    <div id="draft-banner"></div>
+    <input type="text" id="nickname" placeholder="닉네임을 입력하세요" maxlength="20">
+    <button onclick="startGame()">게임 시작</button>
+
+    <h3 class="section-title">📚 내 게임 기록</h3>
+    <div id="history-list"></div>
+    <div id="history-footer"></div>
+  </div>
+
+  <!-- 문제 화면 -->
+  <div id="screen-quiz" class="screen">
+    <div class="q-count" id="q-count"></div>
+    <div class="progress"><div class="progress-fill" id="q-progress"></div></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="choices">
+      <button class="choice" id="choice-a" onclick="choose('A')"></button>
+      <div class="vs">VS</div>
+      <button class="choice" id="choice-b" onclick="choose('B')"></button>
+    </div>
+  </div>
+
+  <!-- 결과 화면 -->
+  <div id="screen-result" class="screen">
+    <div class="result-card">
+      <div class="result-emoji" id="r-emoji"></div>
+      <div class="result-name" id="r-name"></div>
+      <div class="result-desc" id="r-desc"></div>
+    </div>
+    <button onclick="restart()">다시 하기</button>
+    <button class="secondary" onclick="goHome()">홈으로</button>
+  </div>
+</div>
+<script src="food.js"></script>
+</body>
+</html>

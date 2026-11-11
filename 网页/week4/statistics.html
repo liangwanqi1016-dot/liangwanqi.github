@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Data Statistics & Visualization</title>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",sans-serif;
+            background: #f4f6fb;
+            color: #253047;
+            line-height: 1.6;
+        }
+        header{
+            background: #483c8c;
+            color: #fff;
+            padding: 28px 20px;
+            text-align: center;
+        }
+        header h1{
+            font-size: 1.4rem;
+        }
+        header p{
+            font-size: 0.88rem;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        main{
+            max-width: 900px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+        .card{
+            background: #fff;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 18px rgba(23,33,58,0.08);
+        }
+
+        /* tab buttons */
+        .tabs{
+            display: flex;
+            gap: 6px;
+            margin-bottom: 18px;
+            background: #eef0f8;
+            padding: 4px;
+            border-radius: 10px;
+        }
+        .tab-btn{
+            flex: 1;
+            padding: 10px 8px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color:#697386;
+            transition: all 0.15s;
+        }
+        .tab-btn.active{
+            background: #483c8c;
+            color: #fff;
+            font-weight: 600;
+        }
+        .tab-btn:hover:not(.active){
+            background: #dde0ee;
+        }
+
+        /* tab panel */
+        .tab-panel{
+            display: none;
+        }
+        .tab-panel.active{
+            display: block;
+        }
+        .chart-box{
+            position: relative;
+            width: 100%;
+            height: 320px;
+        }
+        .analysis{
+            margin-top: 14px;
+            padding: 14px;
+            background: #f0eef9;
+            border-radius: 8px;
+            font-size: 0.88rem;
+        }
+        .analysis b{
+            color: #483c8c;
+        }
+        .analysis .note{
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #c5c9e0;
+            color: #777;
+            font-size: 0.84rem;
+        }
+        footer{
+            text-align: center;
+            padding: 24px;
+            color: #999;
+            font-size:0.85rem;
+        }
+        /* Mobile responsive */
+        @media(max-width:600px){
+            header{
+                padding: 20px 14px;
+            }
+            header h1{
+                font-size: 1.15rem;
+            }
+            main{
+                padding: 0 10px;
+                margin: 14px auto;
+            }
+            .card{
+                padding: 14px;
+                border-radius: 10px;
+            }
+            .chart-box{
+                height: 260px;
+            }
+            .tabs{
+                flex-direction: column;
+                gap: 4px;
+            }
+            .tab-btn{
+                padding: 10px;
+                font-size: 0.88rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Data Statistics & Visualization</h1>
+        <p>Data Analysis and Visualization</p>
+    </header>
+
+    <main>
+        <div class="card">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="chart1">Bar Chart: Tourist Visits</button>
+                <button class="tab-btn" data-tab="chart2">Line Chart: Monthly Trend</button>
+            </div>
+
+            <!-- Tab1 Bar Chart -->
+            <div class="tab-panel active" id="chart1">
+                <h3 style="margin-bottom: 10px;font-size: 1rem;">Monthly Visitor Count Comparison by Location</h3>
+                <div class="chart-box"><canvas id="barChart"></canvas></div>
+            </div>
+            <!-- Tab2 Line Chart -->
+            <div class="tab-panel" id="chart2">
+                <h3 style="margin-bottom: 10px;font-size: 1rem;">Annual Monthly Visit Trend</h3>
+                <div class="chart-box"><canvas id="lineChart"></canvas></div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Data Visualization</p>
+    </footer>
+    <script src="statistics.js"></script>
+</body>
+</html>

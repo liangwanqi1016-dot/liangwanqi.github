@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>GOOGLE MAP</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            margin: 0;
+            padding: 20px;
+            color: #17223b;
+            background: #f7f8fc;
+            font: 17px/1.65 system-ui,sans-serif;
+        }
+        h1{
+            font-size: 1.5rem;
+        }
+        button,input,select{
+            font: inherit;
+        }
+        button, .action{
+            padding:8px 16px;
+            margin: 4px;
+            border: 1px solid #7455e9;
+            border-radius: 10px;
+            color: #30205c;
+            background: white;
+            cursor: pointer;
+        }
+        button:hover,button[aria-pressed="true"]{
+            background: #ece6ff;
+        }
+        button:focus-visible,a:focus-visible{
+            outline: 3px solid #c56200;
+        }
+        button:disabled{
+            opacity: .5;
+            cursor:default;
+        }
+        label{
+            display: block;
+            margin: 10px 0;
+        }
+        img{
+            width: 100%;
+            max-height: 260px;
+            object-fit: contain;
+        }
+        .layout{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap:20px;
+        }
+        .stage{
+            display: grid;
+            place-items: center;
+            min-height: 220px;
+        }
+        #planet{
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            font-size: 40px;
+        }
+        #result{
+            white-space: pre-line;
+        }
+        canvas{
+            max-width: 100%;
+        }
+        #game{
+            background: #ece6ff;
+            touch-action: manipulation;
+        }
+        .chart{
+            position: relative;
+            height: 280px;
+        }
+        iframe{
+            max-width: 100%;
+            border: 0;
+        }
+        [hidden]{
+            display: none !important;
+        }
+        @media(max-width:600px){
+            .layout{
+                grid-template-columns: 1fr;
+            }
+            body{
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Location Buttons and Google Map</h1>
+    <p>After selecting a location, the description and map marker will update simultaneously</p>
+    <nav id="buttons" aria-label="Location buttons"></nav>
+    <!-- Central Library -->
+    <section id="library" class="place">
+        <h2>Central Library</h2>
+        <p>A quiet place for reading books</p>
+    </section>
+    <!-- Classroom -->
+    <section id="class" class="place" hidden>
+        <h2>Classroom</h2>
+        <p>A quiet place for studying</p>
+    </section>
+    <!-- Sports Field -->
+    <section id="sports" class="place" hidden>
+        <h2>Sports Field</h2>
+        <p>A space to relax and exercise</p>
+    </section>
+
+    <iframe id="map" title="Google Map for selected location" width="600" height="320"
+     referrerpolicy="strict-origin" allowfullscreen></iframe>
+     <p><a id="map-link" target="_blank" rel="noopener">Open map in new tab</a></p>
+     <p>This is a search map for practice. For your assignment, use "Share → Embed map" after finding the actual location.</p>
+     
+     <script>
+        const places=[
+            {id:"library",name:"Central Library",query:"Catholic University of Korea Sacred Heart Campus Central Library",embed:""},
+            {id:"class",name:"B333",query:"Catholic University of Korea Sacred Heart Campus Classroom B333",embed:""},
+            {id:"sports",name:"Sports Field",query:"Catholic University of Korea Sacred Heart Campus Sports Field",embed:""},
+        ];
+        function selectPlace(place){
+            for(const section of document.querySelectorAll(".place")){
+                section.hidden=section.id!==place.id;
+            }
+            for(const button of document.querySelectorAll("#buttons button")){
+                button.setAttribute("aria-pressed",String(button.dataset.place===place.id));
+            }
+            let address=place.embed;
+            if(!address){
+                address="https://maps.google.com/maps?q="+encodeURIComponent(place.query)+"&output=embed";
+            }
+            document.querySelector("#map").src=address;
+            document.querySelector("#map").title=place.name+" Google Map";
+            document.querySelector("#map-link").href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(place.query);
+        }
+        for(const place of places){
+            const button=document.createElement("button");
+            button.textContent=place.name;
+            button.dataset.place=place.id;
+            button.addEventListener("click",function(){
+                selectPlace(place);
+            });
+            document.querySelector("#buttons").append(button);
+        }
+        selectPlace(places[0]);
+     </script>
+</body>
+</html>

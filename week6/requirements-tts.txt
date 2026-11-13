@@ -1,2 +1,0 @@
--r requirements.txt
-piper-tts==1.8.0

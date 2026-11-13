@@ -1,8 +1,0 @@
-__pycache__/
-.venv/
-.env
-models/
-*.wav
-
-.DS_Store
-*.py[cod]

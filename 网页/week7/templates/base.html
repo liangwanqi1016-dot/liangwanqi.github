@@ -19,7 +19,7 @@
             <button class="text-button" type="submit">로그아웃</button>
           </form>
         {% else %}
-          <a href="{{ url_for('login') }}">로그인</a>
+          <a href="{{ url_for('comments') }}">방문자 입구</a><a href="{{ url_for('login') }}">사용자 로그인</a><a href="{{ url_for('admin_login') }}">관리자 입구</a>
           <a href="{{ url_for('register') }}">회원가입</a>
         {% endif %}
       </nav>

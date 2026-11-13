@@ -80,8 +80,8 @@ def ensure_admin_command():
     """배포 시작 시 환경변수의 실습용 관리자를 준비합니다."""
     username = os.environ.get("WEEK7_ADMIN_USERNAME", "").strip()
     password = os.environ.get("WEEK7_ADMIN_PASSWORD", "")
-    if not USERNAME_RULE.fullmatch(username) or not 12 <= len(password) <= 128:
-        raise RuntimeError("WEEK7_ADMIN_USERNAME과 12자 이상 실습용 WEEK7_ADMIN_PASSWORD를 설정하세요.")
+    if not USERNAME_RULE.fullmatch(username) or not 6 <= len(password) <= 128:
+        raise RuntimeError("WEEK7_ADMIN_USERNAME과 6자 이상 실습용 WEEK7_ADMIN_PASSWORD를 설정하세요.")
     db = get_db()
     user = db.execute("SELECT id, is_admin FROM users WHERE username = ?", (username,)).fetchone()
     if user is None:

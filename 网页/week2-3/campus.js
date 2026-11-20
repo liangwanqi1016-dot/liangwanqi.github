@@ -37,15 +37,3 @@ if (mapFrame) {
   selectPlace(location.hash.slice(1));
 }
 
-const imageMode = document.querySelector('#image-mode');
-if (imageMode) {
- imageMode.addEventListener('click', () => {
-  const showIllustration = imageMode.getAttribute('aria-pressed') !== 'true';
-  imageMode.setAttribute('aria-pressed', String(showIllustration));
-  document.querySelectorAll('[data-photo][data-illustration]').forEach(img => {
-   img.src = showIllustration ? img.dataset.illustration : img.dataset.photo;
-  });
-  imageMode.textContent = showIllustration ? '원본 사진으로 보기' : '일러스트로 보기';
-  document.querySelector('#image-status').textContent = showIllustration ? '일러스트가 표시됩니다.' : '원본 사진이 표시됩니다.';
- });
-}

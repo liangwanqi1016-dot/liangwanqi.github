@@ -1,0 +1,21 @@
+/* Library page only: shared styles cannot override these rules. */
+body.page-library{box-sizing:border-box;width:100%;max-width:820px;margin:0 auto;padding:28px 24px 36px;background:#f7f3e9;color:#44382b;font:17px/1.85 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-wrap:anywhere}
+.page-library header{padding:28px 0 24px;background:transparent;color:#44382b;text-align:left;border-bottom:1px solid #d8cbb8}
+.page-library header h1{font:700 clamp(1.9rem,5vw,2.7rem)/1.25 Georgia,serif;color:#443322;margin:18px 0 14px;letter-spacing:-.04em}
+.page-library header p{font-size:1rem;opacity:1;margin:10px 0;color:#60513f}
+.page-library main{max-width:none;width:100%;padding:0;margin:24px 0}
+.page-library figure{margin:0 0 26px;padding:12px;background:#fffdf8;border:1px solid #e4d9c9;border-radius:12px}
+.page-library figure img{display:block;width:100%;height:auto;max-height:510px;object-fit:contain;border-radius:6px;margin:0}
+.page-library figcaption{font-size:.85rem;line-height:1.6;color:#75634e;padding:10px 2px 0}
+.page-library section{background:#fffdf8;padding:24px;margin:18px 0;border:1px solid #ddcfbb;border-radius:12px}
+.page-library h2{font-size:1.2rem;line-height:1.5;margin:0 0 12px;color:#443322}
+.page-library p{margin:10px 0}
+.page-library ul{padding-left:24px;margin:10px 0}
+.page-library li+li{margin-top:8px}
+.page-library a{color:#714b29;text-decoration:underline;text-underline-offset:4px}
+.page-library a:focus-visible{outline:3px solid #46736a;outline-offset:4px}
+.page-library .map-link{display:inline-block;padding:10px 15px;border:1px solid #bfa27e;border-radius:8px;background:#f3eadb;text-decoration:none}
+.page-library>nav{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;padding:20px 0;border-top:1px solid #d8cbb8}
+.page-library>nav a{padding:10px 14px;background:#fffdf8;border:1px solid #ddcfbb;border-radius:8px;text-decoration:none;min-height:44px}
+@media(max-width:600px){body.page-library{padding:16px;font-size:16px;line-height:1.8}.page-library header{padding:12px 0 20px}.page-library header h1{font-size:2rem}.page-library main{margin:20px 0}.page-library figure{padding:8px}.page-library figure img{max-height:360px}.page-library section{padding:20px 16px;margin:14px 0}.page-library h2{font-size:1.15rem}.page-library>nav{gap:10px}.page-library>nav a{flex:1;text-align:center}.page-library .map-link{width:100%;text-align:center}}
+@media(prefers-reduced-motion:reduce){.page-library *{scroll-behavior:auto}}

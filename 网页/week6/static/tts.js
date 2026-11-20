@@ -1,3 +1,4 @@
+const translate = (key, values) => window.CampusUI?.t(key, values) || key;
 let audioURL = null;
 let decodedAudio = null;
 const form = document.querySelector("#tts-form");
@@ -19,14 +20,14 @@ function drawWaveform(buffer) {
   const middle = height / 2;
   const step = Math.max(1, Math.ceil(samples.length / width));
 
-  ctx.fillStyle = "#eaf3ff";
+  ctx.fillStyle = "#f3eadb";
   ctx.fillRect(0, 0, width, height);
-  ctx.strokeStyle = "#9fb6ca";
+  ctx.strokeStyle = "#d9cbb6";
   ctx.beginPath();
   ctx.moveTo(0, middle);
   ctx.lineTo(width, middle);
   ctx.stroke();
-  ctx.strokeStyle = "#245f94";
+  ctx.strokeStyle = "#79503b";
   ctx.lineWidth = Math.max(1, pixelRatio);
   ctx.beginPath();
   for (let x = 0; x < width; x++) {
@@ -64,7 +65,7 @@ form.addEventListener("submit", async function (event) {
   if (audioURL) URL.revokeObjectURL(audioURL);
   audioURL = null;
   controls.disabled = true;
-  status.textContent = "Processing... 서버가 WAV를 생성하고 있습니다.";
+  status.textContent = translate("Processing... 서버가 WAV를 생성하고 있습니다.");
 
   try {
     const response = await fetch("/api/tts", {
@@ -96,7 +97,7 @@ form.addEventListener("submit", async function (event) {
     }
     document.querySelector("#tts-time").textContent =
       (response.headers.get("X-Processing-Ms") || "측정 불가") + " ms";
-    document.querySelector("#tts-duration").textContent = buffer.duration.toFixed(2) + "초";
+    document.querySelector("#tts-duration").textContent = buffer.duration.toFixed(2) + " s";
     document.querySelector("#tts-size").textContent = (blob.size / 1024).toFixed(1) + " KiB";
     result.hidden = false;
     decodedAudio = buffer;
@@ -106,11 +107,11 @@ form.addEventListener("submit", async function (event) {
     audio.hidden = false;
     download.href = audioURL;
     download.hidden = false;
-    status.textContent = "완료 · WAV를 받아 파형을 그렸습니다.";
+    status.textContent = translate("완료 · WAV를 받아 파형을 그렸습니다.");
   } catch (error) {
     result.hidden = true;
     decodedAudio = null;
-    status.textContent = "음성을 확인하지 못했습니다. " + error.message;
+    status.textContent = translate("음성을 확인하지 못했습니다. {error}", {error: error.message});
   } finally {
     controls.disabled = false;
   }

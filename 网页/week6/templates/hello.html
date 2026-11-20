@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>서버가 만든 인사</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
-<body><main><section>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>서버가 만든 인사</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"><script src="{{ url_for('static', filename='campus-ui.js') }}" defer></script></head>
+<body data-theme="campus-20261120"><header class="site-header"><div class="wrap header-row"><a class="brand" data-course-home href="https://liangwanqi1016-dot.github.io/liangwanqi.github/" data-i18n="캠퍼스 다이어리">캠퍼스 다이어리</a><div class="language-switch" role="group" aria-label="Language"><button type="button" data-lang="ko" lang="ko">한국어</button><span>/</span><button type="button" data-lang="zh" lang="zh-CN">中文</button><span>/</span><button type="button" data-lang="en" lang="en">English</button></div></div></header><main><section>
 <p class="eyebrow">GET /hello</p>
 <h1>{{ name }}님, 반갑습니다!</h1>
 <p>Flask가 URL의 name 값을 읽고 이 HTML을 만들어 보냈습니다.</p>
@@ -9,5 +9,5 @@
 <label for="name">다른 이름으로 요청</label><input id="name" name="name" maxlength="30" value="{{ name }}">
 <button>새 HTML 받기</button>
 </form>
-<p><a href="/">이미지 실험실로 돌아가기</a></p>
-</section></main></body></html>
+<p><a href="/" data-i18n="이미지 실험실로 돌아가기">이미지 실험실로 돌아가기</a></p>
+</section></main><footer class="site-footer"><div class="wrap"><span data-i18n="웹 프로그래밍 학습 기록">웹 프로그래밍 학습 기록</span><a data-course-home href="https://liangwanqi1016-dot.github.io/liangwanqi.github/" data-i18n="과제 모음">과제 모음</a></div></footer></body></html>

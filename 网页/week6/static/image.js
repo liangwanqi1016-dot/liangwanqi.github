@@ -1,3 +1,4 @@
+const translate = (key, values) => window.CampusUI?.t(key, values) || key;
 const form = document.querySelector("#image-form");
 const status = document.querySelector("#status");
 let originalURL = null;
@@ -9,7 +10,7 @@ function clearResult() {
   document.querySelector("#result").removeAttribute("src");
   document.querySelector("#download").hidden = true;
   document.querySelector("#download").removeAttribute("href");
-  document.querySelector("#timing").textContent = "새 결과를 기다립니다.";
+  document.querySelector("#timing").textContent = translate("새 결과를 기다립니다.");
 }
 document.querySelector("#image").addEventListener("change", function () {
   clearResult();
@@ -23,7 +24,7 @@ document.querySelector("#image").addEventListener("change", function () {
     originalURL = URL.createObjectURL(file);
     preview.src = originalURL;
   }
-  status.textContent = "처리할 방법을 고르고 서버에서 처리를 누르세요.";
+  status.textContent = translate("처리할 방법을 고르고 서버에서 처리를 누르세요.");
 });
 form.addEventListener("submit", async function (event) {
   // 이 버튼은 JavaScript 가로채기 없이 HTML form의 기본 제출을 사용합니다.
@@ -33,7 +34,7 @@ form.addEventListener("submit", async function (event) {
   const controls = document.querySelector("#controls");
   clearResult();
   controls.disabled = true;
-  status.textContent = "Processing... 서버에서 처리 중입니다.";
+  status.textContent = translate("Processing... 서버에서 처리 중입니다.");
   const started = performance.now();
   try {
     const response = await fetch("/api/process", { method: "POST", body: data });
@@ -53,11 +54,10 @@ form.addEventListener("submit", async function (event) {
     document.querySelector("#download").hidden = false;
     const roundTrip = performance.now() - started;
     document.querySelector("#timing").textContent =
-      "알고리즘 " + response.headers.get("X-Compute-Ms") + " ms · 서버 처리 " +
-      response.headers.get("X-Processing-Ms") + " ms · 왕복 " + roundTrip.toFixed(1) + " ms";
-    status.textContent = "완료 · 결과 크기 " + response.headers.get("X-Image-Size");
+      translate("알고리즘 {compute} ms · 서버 처리 {server} ms · 왕복 {round} ms", {compute: response.headers.get("X-Compute-Ms"), server: response.headers.get("X-Processing-Ms"), round: roundTrip.toFixed(1)});
+    status.textContent = translate("완료 · 결과 크기 {size}", {size: response.headers.get("X-Image-Size")});
   } catch (error) {
-    status.textContent = "처리하지 못했습니다. " + error.message + " 서버 실행 여부도 확인하세요.";
+    status.textContent = translate("처리하지 못했습니다. {error}", {error: error.message});
   } finally {
     controls.disabled = false;
   }

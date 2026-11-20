@@ -5,22 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ board_title }}{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+<script src="{{ url_for('static', filename='campus-ui.js') }}" defer></script></head>
+<body data-theme="campus-20261120">
   <header class="site-header">
     <div class="wrap header-row">
-      <a class="brand" href="{{ url_for('comments') }}">{{ board_title }}</a>
-      <nav aria-label="계정 메뉴">
+      <a class="brand" href="{{ url_for('comments') }}" data-i18n="캠퍼스 다이어리">캠퍼스 다이어리</a>
+      <div class="language-switch" role="group" aria-label="Language"><button type="button" data-lang="ko" lang="ko">한국어</button><span>/</span><button type="button" data-lang="zh" lang="zh-CN">中文</button><span>/</span><button type="button" data-lang="en" lang="en">English</button></div><nav aria-label="계정 메뉴">
         {% if current_user %}
           <span class="current-user">{{ current_user['username'] }}님</span>
-          {% if current_user['is_admin'] %}<a href="{{ url_for('admin') }}">관리 화면</a>{% endif %}
+          {% if current_user['is_admin'] %}<a href="{{ url_for('admin') }}" data-i18n="관리 화면">관리 화면</a>{% endif %}
           <form method="post" action="{{ url_for('logout') }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
-            <button class="text-button" type="submit">로그아웃</button>
+            <button class="text-button" type="submit" data-i18n="로그아웃">로그아웃</button>
           </form>
         {% else %}
-          <a href="{{ url_for('comments') }}">방문자 입구</a><a href="{{ url_for('login') }}">사용자 로그인</a><a href="{{ url_for('admin_login') }}">관리자 입구</a>
-          <a href="{{ url_for('register') }}">회원가입</a>
+          <a href="{{ url_for('comments') }}" data-i18n="방문자 입구">방문자 입구</a><a href="{{ url_for('login') }}" data-i18n="사용자 로그인">사용자 로그인</a><a href="{{ url_for('admin_login') }}" data-i18n="관리자 입구">관리자 입구</a>
+          <a href="{{ url_for('register') }}" data-i18n="회원가입">회원가입</a>
         {% endif %}
       </nav>
     </div>
@@ -28,6 +28,6 @@
   <main class="wrap">
     {% block content %}{% endblock %}
   </main>
-  <footer class="wrap site-footer">실습용 짧은 글 서비스 · SQLite에 저장한 글을 여러 브라우저에서 함께 봅니다.</footer>
+  <footer class="wrap site-footer">캠퍼스 한 끼 기록 · <a data-course-home href="https://liangwanqi1016-dot.github.io/liangwanqi.github/" data-i18n="과제 모음">과제 모음</a></footer>
 </body>
 </html>

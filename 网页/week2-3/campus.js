@@ -1,15 +1,4 @@
 'use strict';
-// Filters enhance the page: all stories remain visible when JavaScript is unavailable.
-const filterButtons = document.querySelectorAll('[data-filter]');
-filterButtons.forEach(button => button.addEventListener('click', () => {
-  let count = 0;
-  document.querySelectorAll('[data-category]').forEach(card => {
-    card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter;
-    if (!card.hidden) count++;
-  });
-  filterButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-  document.querySelector('#filter-status').textContent = `장소 ${count}곳 표시`;
-}));
 const mapFrame = document.querySelector('#campus-google-map');
 if (mapFrame) {
   const places = {

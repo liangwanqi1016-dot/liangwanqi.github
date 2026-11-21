@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ board_title }}{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<script src="{{ url_for('static', filename='campus-ui.js') }}" defer></script><link rel="stylesheet" href="{{ url_for('static', filename='community.css') }}?v=20261121"><script src="{{ url_for('static', filename='community.js') }}?v=20261121" defer></script></head>
+<script src="{{ url_for('static', filename='campus-ui.js') }}" defer></script><link rel="stylesheet" href="{{ url_for('static', filename='community.css') }}?v=20261121"><script src="{{ url_for('static', filename='community.js') }}?v=20261121" defer></script>{% block page_head %}{% endblock %}</head>
 <body data-theme="campus-community-20261121" class="{% block body_class %}{% endblock %}">
   <header class="site-header">
     <div class="wrap header-row">

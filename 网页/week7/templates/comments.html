@@ -24,7 +24,7 @@
 </section>
 
 <section class="panel" aria-labelledby="list-heading">
-  <div class="section-heading"><h2 id="list-heading" data-i18n="모두의 한 줄 글">모두의 한 줄 글</h2><span>{{ comments|length }}개</span></div>
+  <div class="section-heading"><h2 id="list-heading" data-i18n="모두의 한 줄 글">모두의 한 줄 글</h2><span>{{ comments|length }}<span data-community="postCount">개</span></span></div>
   {% if request.args.get('reported') %}<p class="notice" data-i18n="신고를 받았습니다. 관리 화면에서 확인할 수 있습니다.">신고를 받았습니다. 관리 화면에서 확인할 수 있습니다.</p>{% endif %}
   {% if comments %}
     <ol class="comment-list">

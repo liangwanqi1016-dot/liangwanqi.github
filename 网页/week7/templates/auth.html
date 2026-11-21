@@ -11,7 +11,7 @@
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
     <label for="username" data-i18n="아이디 · 영문·숫자·밑줄 3~20자">아이디 · 영문·숫자·밑줄 3~20자</label>
     <input id="username" name="username" value="{{ username|default('') }}" minlength="3" maxlength="20" autocomplete="username" required>
-    <label for="password">비밀번호 · {{ '8' if mode == 'register' else '6' }}~128자</label>
+    <label for="password"><span data-community="password">비밀번호</span> · {{ '8' if mode == 'register' else '6' }}–128<span data-community="characters">자</span></label>
     <input id="password" name="password" type="password" minlength="{{ 8 if mode == 'register' else 6 }}" maxlength="128" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}" required>
     <button class="primary" type="submit" data-i18n="{{ '계정 만들기' if mode == 'register' else '로그인' }}">{{ '계정 만들기' if mode == 'register' else '로그인' }}</button>
   </form>

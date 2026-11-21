@@ -141,6 +141,10 @@ def health():
 
 
 @app.get("/")
+def welcome():
+    return render_template("welcome.html")
+
+
 @app.get("/comments")
 def comments():
     rows = get_db().execute(

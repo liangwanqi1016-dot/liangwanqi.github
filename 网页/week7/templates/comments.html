@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="hero">
+<p class="community-back"><a href="{{ url_for('welcome') }}"><span data-community="back">← 캠퍼스 한 끼 입구</span></a></p><section class="hero community-board-hero">
   <p class="eyebrow">WEEK 07 · CAMPUS TABLE</p>
-  <h1>{{ board_title }}</h1>
-  <p class="lead">{{ board_question }}</p>
+  <h1 data-i18n="캠퍼스 한 끼 추천">{{ board_title }}</h1>
+  <p class="lead" data-i18n="학교 근처에서 친구에게 추천하고 싶은 한 끼는 무엇인가요?">{{ board_question }}</p>
   <p data-i18n="예: 정문 근처 따뜻한 우동 한 그릇! 메뉴와 추천 이유를 한 줄로 나눠 주세요.">예: 정문 근처 따뜻한 우동 한 그릇! 메뉴와 추천 이유를 한 줄로 나눠 주세요.</p>
   
 </section>
@@ -13,13 +13,13 @@
   {% if current_user %}
     <form method="post" action="{{ url_for('add_comment') }}">
       <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
-      <label for="content">{{ current_user['username'] }}님의 한 줄 글 · 1~300자</label>
+      <label for="content"><span>{{ current_user['username'] }}</span> · <span data-community="postLabel">나의 추천 · 1~300자</span></label>
       <textarea id="content" name="content" rows="3" maxlength="300" required></textarea>
       <button class="primary" type="submit" data-i18n="글 올리기">글 올리기</button>
     </form>
   {% else %}
     <p data-i18n="글을 쓰려면 실습용 계정으로 로그인하세요. 목록은 로그인하지 않아도 볼 수 있습니다.">글을 쓰려면 실습용 계정으로 로그인하세요. 목록은 로그인하지 않아도 볼 수 있습니다.</p>
-    <p><a class="button-link" href="{{ url_for('login') }}" data-i18n="사용자 로그인">사용자 로그인</a> <a class="button-link" href="{{ url_for('admin_login') }}" data-i18n="관리자 입구">관리자 입구</a></p>
+    <p><a class="button-link" href="{{ url_for('login') }}" data-i18n="사용자 로그인">사용자 로그인</a> <a class="secondary-link" href="{{ url_for('register') }}" data-i18n="회원가입">회원가입</a></p>
   {% endif %}
 </section>
 

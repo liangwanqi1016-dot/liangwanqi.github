@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block title %}{{ '회원가입' if mode == 'register' else ('관리자 로그인' if mode == 'admin_login' else '일반 사용자 로그인') }} · {{ board_title }}{% endblock %}
 {% block content %}
-<section class="panel auth-panel">
+<div class="community-auth"><aside class="auth-art"><img src="{{ url_for('static', filename='tteokbokki-cutout.webp' if mode == 'admin_login' else 'gimbap-cutout.webp') }}" data-food-art="tteokbokki" data-food-art="gimbap" alt="한국 음식 수채화 삽화" width="1536" height="1024"><span>{{ 'ADMIN / CAMPUS TABLE' if mode == 'admin_login' else 'WELCOME / CAMPUS TABLE' }}</span></aside><section class="panel auth-panel">
   <p class="eyebrow">{{ 'CREATE ACCOUNT' if mode == 'register' else ('ADMIN ONLY' if mode == 'admin_login' else 'USER LOGIN') }}</p>
-  <h1>{{ '회원가입' if mode == 'register' else ('관리자 로그인' if mode == 'admin_login' else '일반 사용자 로그인') }}</h1>
+  <h1 data-i18n="{{ '회원가입' if mode == 'register' else ('관리자 로그인' if mode == 'admin_login' else '일반 사용자 로그인') }}">{{ '회원가입' if mode == 'register' else ('관리자 로그인' if mode == 'admin_login' else '일반 사용자 로그인') }}</h1>
   <p data-i18n="실제 개인정보 대신 실습용 아이디와 비밀번호를 사용하세요.">실제 개인정보 대신 실습용 아이디와 비밀번호를 사용하세요.</p>
   {% if request.args.get('registered') %}<p class="notice" data-i18n="계정이 만들어졌습니다. 이제 로그인하세요.">계정이 만들어졌습니다. 이제 로그인하세요.</p>{% endif %}
   {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
@@ -13,11 +13,11 @@
     <input id="username" name="username" value="{{ username|default('') }}" minlength="3" maxlength="20" autocomplete="username" required>
     <label for="password">비밀번호 · {{ '8' if mode == 'register' else '6' }}~128자</label>
     <input id="password" name="password" type="password" minlength="{{ 8 if mode == 'register' else 6 }}" maxlength="128" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}" required>
-    <button class="primary" type="submit">{{ '계정 만들기' if mode == 'register' else '로그인' }}</button>
+    <button class="primary" type="submit" data-i18n="{{ '계정 만들기' if mode == 'register' else '로그인' }}">{{ '계정 만들기' if mode == 'register' else '로그인' }}</button>
   </form>
   <p class="switch-link">
     {% if mode == 'register' %}<a href="{{ url_for('login') }}" data-i18n="이미 계정이 있나요? 로그인">이미 계정이 있나요? 로그인</a>
     {% elif mode == 'admin_login' %}<a href="{{ url_for('comments') }}" data-i18n="방문자 입구로 돌아가기">방문자 입구로 돌아가기</a>{% else %}<a href="{{ url_for('register') }}" data-i18n="처음인가요? 회원가입">처음인가요? 회원가입</a>{% endif %}
   </p>
-</section>
+</section></div>
 {% endblock %}

@@ -180,16 +180,18 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    return authenticate(admin_channel=False)
+    return authenticate()
 
 
 @app.route("/admin/login", methods=["GET", "POST"])
 def admin_login():
-    return authenticate(admin_channel=True)
+    if request.method == "GET":
+        return redirect(url_for("login"))
+    return authenticate()
 
 
-def authenticate(admin_channel):
-    mode = "admin_login" if admin_channel else "login"
+def authenticate():
+    mode = "login"
     if request.method == "GET":
         return render_template("auth.html", mode=mode)
     username = request.form.get("username", "").strip()
@@ -201,13 +203,10 @@ def authenticate(admin_channel):
         return render_template("auth.html", mode=mode, error="아이디 또는 비밀번호를 확인하세요.", username=username), 401
     if user["is_blocked"]:
         return render_template("auth.html", mode=mode, error="차단된 계정입니다.", username=username), 403
-    if bool(user["is_admin"]) != admin_channel:
-        message = "관리자 계정만 이용할 수 있습니다." if admin_channel else "관리자 계정은 관리자 전용 입구에서 로그인하세요."
-        return render_template("auth.html", mode=mode, error=message, username=username), 403
     session.clear()
     session["user_id"] = user["id"]
     session["_csrf_token"] = secrets.token_urlsafe(32)
-    return redirect(url_for("admin" if admin_channel else "comments"))
+    return redirect(url_for("admin" if user["is_admin"] else "comments"))
 
 
 @app.post("/logout")

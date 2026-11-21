@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>문장이 목소리가 되는 서버</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"><script src="{{ url_for('static', filename='tts.js') }}" defer></script><script src="{{ url_for('static', filename='campus-ui.js') }}" defer></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>문장이 목소리가 되는 서버</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"><script src="{{ url_for('static', filename='tts.js') }}" defer></script><script src="{{ url_for('static', filename='campus-ui.js') }}" defer></script><style>main>header::after{background-image:url("{{ url_for('static', filename='voice-art.webp') }}")}</style></head>
 <body data-theme="campus-20261120"><header class="site-header"><div class="wrap header-row"><a class="brand" data-course-home href="https://liangwanqi1016-dot.github.io/liangwanqi.github/" data-i18n="캠퍼스 다이어리">캠퍼스 다이어리</a><div class="language-switch" role="group" aria-label="Language"><button type="button" data-lang="ko" lang="ko">한국어</button><span>/</span><button type="button" data-lang="zh" lang="zh-CN">中文</button><span>/</span><button type="button" data-lang="en" lang="en">English</button></div></div></header><main>
 <header><p class="eyebrow">WEEK 06 · VOICE</p><h1 data-i18n="문장을 목소리로">문장을 목소리로</h1><p data-i18n="영어 문장을 보내면 Flask 서버의 Piper 모델이 WAV를 만듭니다. 소리를 들을 수 없는 실습실에서도 생성 결과를 파형과 숫자로 확인할 수 있습니다.">영어 문장을 보내면 Flask 서버의 Piper 모델이 WAV를 만듭니다. 소리를 들을 수 없는 실습실에서도 생성 결과를 파형과 숫자로 확인할 수 있습니다.</p></header>
 <section><form id="tts-form"><fieldset id="tts-controls">
@@ -15,5 +15,5 @@
 <p class="muted" data-i18n="파형은 브라우저가 받은 WAV를 분석해 그립니다. 아래 재생과 다운로드는 선택 사항입니다.">파형은 브라우저가 받은 WAV를 분석해 그립니다. 아래 재생과 다운로드는 선택 사항입니다.</p>
 <audio id="audio" controls hidden></audio><p><a id="wav-download" download="speech.wav" hidden data-i18n="WAV 내려받기">WAV 내려받기</a></p>
 </div>
-<p><a data-course-home href="https://liangwanqi1016-dot.github.io/liangwanqi.github/image/" data-i18n="이미지 실험실로 돌아가기">이미지 실험실로 돌아가기</a></p></section>
+<p><a href="https://campus-image-week6.onrender.com/hello">← <span data-i18n="실험실 입구">실험실 입구</span></a></p></section>
 </main><footer class="site-footer"><div class="wrap"><span data-i18n="웹 프로그래밍 학습 기록">웹 프로그래밍 학습 기록</span><a data-course-home href="https://liangwanqi1016-dot.github.io/liangwanqi.github/" data-i18n="과제 모음">과제 모음</a></div></footer></body></html>

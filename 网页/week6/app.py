@@ -20,12 +20,21 @@ cv2.setNumThreads(1)
 
 @app.get("/")
 def index():
+    return welcome_page()
+
+
+@app.get("/image")
+def image_page():
     return render_template("index.html")
 
 
 @app.get("/hello")
 def hello():
-    name = request.args.get("name", "방문자").strip()[:30] or "방문자"
+    return welcome_page()
+
+
+def welcome_page():
+    name = request.args.get("name", "").strip()[:30]
     return render_template("hello.html", name=name)
 
 

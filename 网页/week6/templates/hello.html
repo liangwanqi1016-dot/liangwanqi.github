@@ -1,13 +1,21 @@
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>서버가 만든 인사</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"><script src="{{ url_for('static', filename='campus-ui.js') }}" defer></script></head>
-<body data-theme="campus-20261120"><header class="site-header"><div class="wrap header-row"><a class="brand" data-course-home href="https://liangwanqi1016-dot.github.io/liangwanqi.github/" data-i18n="캠퍼스 다이어리">캠퍼스 다이어리</a><div class="language-switch" role="group" aria-label="Language"><button type="button" data-lang="ko" lang="ko">한국어</button><span>/</span><button type="button" data-lang="zh" lang="zh-CN">中文</button><span>/</span><button type="button" data-lang="en" lang="en">English</button></div></div></header><main><section>
-<p class="eyebrow">GET /hello</p>
-<h1>{{ name }}님, 반갑습니다!</h1>
-<p>Flask가 URL의 name 값을 읽고 이 HTML을 만들어 보냈습니다.</p>
-<form action="/hello" method="get">
-<label for="name">다른 이름으로 요청</label><input id="name" name="name" maxlength="30" value="{{ name }}">
-<button>새 HTML 받기</button>
-</form>
-<p><a href="/" data-i18n="이미지 실험실로 돌아가기">이미지 실험실로 돌아가기</a></p>
-</section></main><footer class="site-footer"><div class="wrap"><span data-i18n="웹 프로그래밍 학습 기록">웹 프로그래밍 학습 기록</span><a data-course-home href="https://liangwanqi1016-dot.github.io/liangwanqi.github/" data-i18n="과제 모음">과제 모음</a></div></footer></body></html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>캠퍼스 크리에이티브 랩</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"><script src="{{ url_for('static', filename='campus-ui.js') }}" defer></script><link rel="stylesheet" href="{{ url_for('static', filename='welcome.css') }}"><script src="{{ url_for('static', filename='welcome.js') }}" defer></script></head>
+<body class="welcome-page" data-theme="campus-welcome-20261121"><header class="site-header"><div class="wrap header-row"><a class="brand" data-course-home href="https://liangwanqi1016-dot.github.io/liangwanqi.github/" data-i18n="캠퍼스 다이어리">캠퍼스 다이어리</a><div class="language-switch" role="group" aria-label="Language"><button type="button" data-lang="ko" lang="ko">한국어</button><span>/</span><button type="button" data-lang="zh" lang="zh-CN">中文</button><span>/</span><button type="button" data-lang="en" lang="en">English</button></div></div></header><main class="welcome-main">
+<div class="welcome-topline"><span>WEEK 06 / CREATIVE LAB</span><span class="live-label"><i aria-hidden="true"></i><span data-welcome="live">나의 캠퍼스 실험실</span></span></div>
+<section class="welcome-stage" aria-labelledby="welcome-heading">
+ <div class="welcome-copy"><p class="welcome-kicker" data-welcome="kicker">작은 상상, 새로운 캠퍼스</p>
+ <h1 id="welcome-heading">{% if name %}<span class="visitor-name">{{ name }}</span><span data-welcome="greeting">님, 반가워요.</span>{% else %}<span data-welcome="title">캠퍼스에서,<br>상상을 켜다.</span>{% endif %}</h1>
+ <p class="welcome-intro" data-welcome="intro">사진 한 장을 새롭게 바꾸고, 나의 문장을 목소리로 만들어 보세요.</p>
+ <form class="welcome-form" action="{{ url_for('hello') }}" method="get">
+  <label for="name" data-welcome="nameLabel">어떤 이름으로 불러 드릴까요?</label>
+  <div class="name-row"><input id="name" name="name" maxlength="30" required value="{{ name }}" autocomplete="nickname" placeholder="이름 또는 닉네임"><input id="welcome-lang" type="hidden" name="lang" value="ko"><button type="submit"><span data-welcome="{{ 'rename' if name else 'enter' }}">{{ '이름 바꾸기' if name else '실험실 열기' }}</span><span aria-hidden="true">↗</span></button></div>
+ </form>
+ <p class="welcome-note" data-welcome="{{ 'ready' if name else 'note' }}">{{ '준비됐어요. 아래에서 시작할 실험을 골라 보세요.' if name else '이름을 입력하면 나만의 환영 화면이 열립니다.' }}</p></div>
+ <div class="welcome-visual"><div class="orbit orbit-one" aria-hidden="true"></div><div class="orbit orbit-two" aria-hidden="true"></div><figure class="campus-photo"><img src="{{ url_for('static', filename='welcome-art.webp') }}" alt="캠퍼스 교실의 창가 삽화" width="1080" height="1440"><figcaption>MY CAMPUS, MY STORY.</figcaption></figure><span class="floating-label label-light" aria-hidden="true">✦ MAKE SOMETHING</span><span class="floating-label label-dark" aria-hidden="true">PHOTO × VOICE</span></div>
+</section>
+{% if name %}<section class="lab-selection" aria-labelledby="choose-heading"><div class="selection-heading"><h2 id="choose-heading" data-welcome="choose">오늘은 무엇을 만들어 볼까요?</h2><span>01 — 02</span></div><div class="lab-cards">
+<a class="lab-card photo-card" data-lab-link href="{{ url_for('image_page') }}"><div class="card-art"><img src="{{ url_for('static', filename='photo-art.webp') }}" alt="중앙도서관 삽화" width="1080" height="1440" loading="lazy"><span class="card-index">01 / IMAGE</span><span class="card-arrow" aria-hidden="true">↗</span></div><div class="card-copy"><h3 data-welcome="photo">사진 실험실</h3><p data-welcome="photoDesc">흑백, 부드러운 빛, 선으로 찾는 새로운 장면.</p><span class="card-cta" data-welcome="photoOpen">사진으로 시작하기 →</span></div></a>
+<a class="lab-card voice-card" data-lab-link href="https://campus-tts-week6.onrender.com/tts"><div class="card-art"><img src="{{ url_for('static', filename='voice-art.webp') }}" alt="운동장 축제 삽화" width="1080" height="1440" loading="lazy"><span class="card-index">02 / VOICE</span><span class="card-arrow" aria-hidden="true">↗</span></div><div class="card-copy"><h3 data-welcome="voice">목소리 실험실</h3><p data-welcome="voiceDesc">영어 문장을 소리로 바꾸고, 파형으로 만나 보세요.</p><span class="card-cta" data-welcome="voiceOpen">문장으로 시작하기 →</span></div></a>
+</div></section>{% endif %}
+</main><footer class="site-footer"><div class="wrap"><span data-i18n="웹 프로그래밍 학습 기록">웹 프로그래밍 학습 기록</span><a data-course-home href="https://liangwanqi1016-dot.github.io/liangwanqi.github/" data-i18n="과제 모음">과제 모음</a></div></footer></body></html>

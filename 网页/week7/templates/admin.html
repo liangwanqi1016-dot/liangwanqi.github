@@ -1,37 +1,12 @@
 {% extends "base.html" %}
 {% block title %}관리 화면 · {{ board_title }}{% endblock %}
 {% block content %}
-<section class="hero">
+<section class="hero community-admin-hero">
   <p class="eyebrow">ADMIN</p>
   <h1 data-i18n="관리 화면">관리 화면</h1>
   <p data-i18n="신고와 글을 확인하고 필요할 때 글 삭제·계정 차단을 합니다. 이 화면은 관리자만 열 수 있습니다.">신고와 글을 확인하고 필요할 때 글 삭제·계정 차단을 합니다. 이 화면은 관리자만 열 수 있습니다.</p>
-</section>
-<section class="panel test-data-panel">
-  <h2 data-i18n="먼저, 연습 데이터 만들기">먼저, 연습 데이터 만들기</h2>
-  <p>버튼을 누르면 임의의 이름을 가진 <strong>연습 계정 2개와 글 4개</strong>가 생깁니다. 두 계정의 비밀번호는 이번 묶음에서 같고, 아래에 한 번만 표시됩니다. 이름과 비밀번호를 적어 두고 로그아웃한 뒤 각각 로그인해 글 신고를 시험해 보세요.</p>
-  <p>현재 연습 계정 {{ test_user_count }}개 · 연습 글 {{ test_comment_count }}개</p>
-  {% if test_credentials %}
-    <div class="test-credentials" role="status">
-      <strong>방금 만든 계정 · 이 화면에서 한 번만 표시</strong>
-      <p>아이디: <code>{{ test_credentials.names|join(' / ') }}</code></p>
-      <p>공통 비밀번호: <code>{{ test_credentials.password }}</code></p>
-      <p>새로고침하면 비밀번호 표시는 사라집니다. 이 계정은 실습용으로만 사용하세요.</p>
-    </div>
-  {% endif %}
-  {% if test_notice %}<p class="notice" role="status">{{ test_notice }}</p>{% endif %}
-  <div class="test-data-actions">
-    <form method="post" action="{{ url_for('create_test_data') }}">
-      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
-      <button class="primary" type="submit" data-i18n="연습 계정·글 무작위 생성">연습 계정·글 무작위 생성</button>
-    </form>
-    <form method="post" action="{{ url_for('delete_test_data') }}" onsubmit="return confirm('연습 계정과 그 계정의 글을 모두 삭제할까요?')">
-      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
-      <button class="delete-button" type="submit" {% if not test_user_count %}disabled{% endif %} data-i18n="연습 데이터 모두 삭제">연습 데이터 모두 삭제</button>
-    </form>
-  </div>
-  <p class="empty">삭제는 연습 표시가 붙은 계정과 그 글·관련 신고에만 적용됩니다. 직접 가입한 계정과 글은 남습니다.</p>
-</section>
-<section class="panel">
+<img class="admin-food-friend" src="{{ url_for('static', filename='tteok-cute.webp') }}" alt="" aria-hidden="true" width="1536" height="1024"></section>
+<div class="admin-workspace"><section class="panel">
   <h2 data-i18n="글 검색·신고 확인">글 검색·신고 확인</h2>
   <form method="get" action="{{ url_for('admin') }}" class="search-form">
     <label for="query" data-i18n="내용으로 검색">내용으로 검색</label>
@@ -72,4 +47,5 @@
     {% endfor %}
   </ul>
 </section>
+</div>
 {% endblock %}

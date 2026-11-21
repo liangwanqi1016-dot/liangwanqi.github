@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ '회원가입' if mode == 'register' else '로그인' }} · {{ board_title }}{% endblock %}
 {% block content %}
-<div class="community-auth"><aside class="auth-art"><img src="{{ url_for('static', filename='gimbap-cutout.webp') }}" data-food-art="gimbap" alt="김밥과 따뜻한 차 수채화" width="1536" height="1024"><span>WELCOME / CAMPUS TABLE</span></aside><section class="panel auth-panel">
+<div class="community-auth"><aside class="auth-art"><img class="auth-main-food" src="{{ url_for('static', filename='gimbap-cutout.webp') }}" data-food-art="gimbap" alt="김밥과 따뜻한 차 수채화" width="1536" height="1024"><img class="auth-cute-one" src="{{ url_for('static', filename='bungeoppang-cute.webp') }}" alt="" aria-hidden="true" width="1536" height="1024"><img class="auth-cute-two" src="{{ url_for('static', filename='tteok-cute.webp') }}" alt="" aria-hidden="true" width="1536" height="1024"><span>WELCOME / CAMPUS TABLE</span></aside><section class="panel auth-panel">
 <p class="eyebrow">{{ 'CREATE ACCOUNT' if mode == 'register' else 'WELCOME BACK' }}</p>
 <h1 data-i18n="{{ '회원가입' if mode == 'register' else '로그인' }}">{{ '회원가입' if mode == 'register' else '로그인' }}</h1>
 <p data-community="{{ 'registerIntro' if mode == 'register' else 'loginIntro' }}">{{ '새 계정으로 나의 한 끼를 기록해 보세요.' if mode == 'register' else '계정으로 로그인하고 캠퍼스 한 끼 기록을 이어가세요.' }}</p>

@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<p class="community-back"><a href="{{ url_for('welcome') }}"><span data-community="back">← 캠퍼스 한 끼 입구</span></a></p><section class="hero community-board-hero">
+<p class="community-back"><a href="{{ url_for('welcome') }}"><span data-community="back">← 캠퍼스 한 끼 입구</span></a></p><section class="hero community-board-hero"><div class="board-intro-copy">
   <p class="eyebrow">WEEK 07 · CAMPUS TABLE</p>
   <h1 data-i18n="캠퍼스 한 끼 추천">{{ board_title }}</h1>
   <p class="lead" data-i18n="학교 근처에서 친구에게 추천하고 싶은 한 끼는 무엇인가요?">{{ board_question }}</p>
   <p data-i18n="예: 정문 근처 따뜻한 우동 한 그릇! 메뉴와 추천 이유를 한 줄로 나눠 주세요.">예: 정문 근처 따뜻한 우동 한 그릇! 메뉴와 추천 이유를 한 줄로 나눠 주세요.</p>
   
-</section>
+</div><div class="board-food-art" aria-hidden="true"><img src="{{ url_for('static', filename='mandu-cute.webp') }}" alt="" width="1536" height="1024"></div></section>
 
-<section class="panel" aria-labelledby="write-heading">
+<div class="board-layout"><section class="panel write-panel" aria-labelledby="write-heading">
   <h2 id="write-heading" data-i18n="한 줄 남기기">한 줄 남기기</h2>
   {% if current_user %}
     <form method="post" action="{{ url_for('add_comment') }}">
@@ -23,7 +23,7 @@
   {% endif %}
 </section>
 
-<section class="panel" aria-labelledby="list-heading">
+<section class="panel board-list-panel" aria-labelledby="list-heading">
   <div class="section-heading"><h2 id="list-heading" data-i18n="모두의 한 줄 글">모두의 한 줄 글</h2><span>{{ comments|length }}<span data-community="postCount">개</span></span></div>
   {% if request.args.get('reported') %}<p class="notice" data-i18n="신고를 받았습니다. 관리 화면에서 확인할 수 있습니다.">신고를 받았습니다. 관리 화면에서 확인할 수 있습니다.</p>{% endif %}
   {% if comments %}
@@ -49,7 +49,8 @@
       {% endfor %}
     </ol>
   {% else %}
-    <p class="empty" data-i18n="아직 글이 없습니다. 첫 의견을 남겨 보세요.">아직 글이 없습니다. 첫 의견을 남겨 보세요.</p>
+    <div class="meal-empty-state"><img src="{{ url_for('static', filename='hotteok-cute.webp') }}" alt="" aria-hidden="true" width="1536" height="1024"><p class="empty" data-i18n="아직 글이 없습니다. 첫 의견을 남겨 보세요.">아직 글이 없습니다. 첫 의견을 남겨 보세요.</p></div>
   {% endif %}
 </section>
+</div>
 {% endblock %}

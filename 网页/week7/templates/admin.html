@@ -10,17 +10,17 @@
   <h2 data-i18n="글 검색·신고 확인">글 검색·신고 확인</h2>
   <form method="get" action="{{ url_for('admin') }}" class="search-form">
     <label for="query" data-i18n="내용으로 검색">내용으로 검색</label>
-    <input id="query" name="q" value="{{ query }}" maxlength="100" placeholder="예: 광고">
-    <label class="inline-check"><input type="checkbox" name="reported" value="1" {% if reported_only %}checked{% endif %}> 신고된 글만 보기</label>
+    <input id="query" name="q" value="{{ query }}" maxlength="100" placeholder="예: 광고" data-community-placeholder="searchExample">
+    <label class="inline-check"><input type="checkbox" name="reported" value="1" {% if reported_only %}checked{% endif %}> <span data-community="reportedOnly">신고된 글만 보기</span></label>
     <button class="primary" type="submit" data-i18n="찾기">찾기</button>
   </form>
-  <p>{{ comments|length }}개의 글</p>
+  <p>{{ comments|length }}<span data-community="postCount">개</span></p>
   <ol class="comment-list">
     {% for comment in comments %}
       <li class="comment-card">
         <div class="comment-meta"><strong>{{ comment['username'] }}</strong><time>{{ comment['created_at'] }} UTC</time></div>
         <p class="comment-text">{{ comment['content'] }}</p>
-        <p>신고 {{ comment['report_count'] }}건{% if comment['report_reasons'] %} · 이유: {{ comment['report_reasons'] }}{% endif %}</p>
+        <p><span data-community="reportsLabel">신고</span> {{ comment['report_count'] }}<span data-community="reportsUnit">건</span>{% if comment['report_reasons'] %} · <span data-community="reasonsLabel">이유:</span> {{ comment['report_reasons'] }}{% endif %}</p>
         <form method="post" action="{{ url_for('admin_delete_comment', comment_id=comment['id']) }}">
           <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
           <button class="delete-button" type="submit" data-i18n="관리자 삭제">관리자 삭제</button>
@@ -36,11 +36,11 @@
   <ul class="user-list">
     {% for user in users %}
       <li>
-        <span><strong>{{ user['username'] }}</strong>{% if user['is_test'] %} · 연습{% endif %}{% if user['is_admin'] %} · 관리자{% elif user['is_blocked'] %} · 차단됨{% endif %}</span>
+        <span><strong>{{ user['username'] }}</strong>{% if user['is_test'] %} · <span data-community="practiceUser">연습</span>{% endif %}{% if user['is_admin'] %} · <span data-community="adminUser">관리자</span>{% elif user['is_blocked'] %} · <span data-community="blockedUser">차단됨</span>{% endif %}</span>
         {% if not user['is_admin'] %}
           <form method="post" action="{{ url_for('block_user', user_id=user['id']) }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
-            <button class="delete-button" type="submit">{{ '차단 해제' if user['is_blocked'] else '차단' }}</button>
+            <button class="delete-button" type="submit" data-community="{{ 'unblock' if user['is_blocked'] else 'block' }}">{{ '차단 해제' if user['is_blocked'] else '차단' }}</button>
           </form>
         {% endif %}
       </li>

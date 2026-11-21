@@ -41,7 +41,7 @@
             <form class="report-form" method="post" action="{{ url_for('report_comment', comment_id=comment['id']) }}">
               <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
               <label for="reason-{{ comment['id'] }}" data-i18n="신고 이유 · 3~100자">신고 이유 · 3~100자</label>
-              <input id="reason-{{ comment['id'] }}" name="reason" minlength="3" maxlength="100" required placeholder="예: 반복 광고">
+              <input id="reason-{{ comment['id'] }}" name="reason" minlength="3" maxlength="100" required placeholder="예: 반복 광고" data-community-placeholder="reportExample">
               <button class="report-button" type="submit" data-i18n="신고">신고</button>
             </form>
           {% endif %}

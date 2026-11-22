@@ -68,7 +68,8 @@ form.addEventListener("submit", async function (event) {
   status.textContent = translate("Processing... 서버가 WAV를 생성하고 있습니다.");
 
   try {
-    const response = await fetch("/api/tts", {
+    if (form.dataset.api && window.CampusServers) await window.CampusServers.ready(new URL(form.dataset.api).origin);
+    const response = await fetch(form.dataset.api || "/api/tts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)

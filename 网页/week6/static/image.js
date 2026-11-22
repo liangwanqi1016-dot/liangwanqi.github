@@ -37,7 +37,8 @@ form.addEventListener("submit", async function (event) {
   status.textContent = translate("Processing... 서버에서 처리 중입니다.");
   const started = performance.now();
   try {
-    const response = await fetch("/api/process", { method: "POST", body: data });
+    if (form.dataset.api && window.CampusServers) await window.CampusServers.ready(new URL(form.dataset.api).origin);
+    const response = await fetch(form.dataset.api || "/api/process", { method: "POST", body: data });
     if (!response.ok) {
       let message = "처리에 실패했습니다. HTTP " + response.status;
       if ((response.headers.get("Content-Type") || "").includes("application/json")) {

@@ -18,6 +18,19 @@ app.config["MAX_CONTENT_LENGTH"] = 6 * 1024 * 1024  # multipart 본문 전체 6 
 cv2.setNumThreads(1)
 
 
+@app.after_request
+def pages_cors(response):
+    # Only the public health/API endpoints accept the assignment site's origin.
+    allowed_path = request.path == "/health" or request.path in {"/api/process", "/api/tts"}
+    if allowed_path and request.headers.get("Origin") == "https://liangwanqi1016-dot.github.io":
+        response.headers["Access-Control-Allow-Origin"] = "https://liangwanqi1016-dot.github.io"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+        response.headers["Access-Control-Expose-Headers"] = "X-Compute-Ms, X-Processing-Ms, X-Image-Size"
+        response.vary.add("Origin")
+    return response
+
+
 @app.get("/")
 def index():
     return welcome_page()

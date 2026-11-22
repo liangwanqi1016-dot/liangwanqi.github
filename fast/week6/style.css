@@ -4,3 +4,4 @@
 /* Mobile performance: keep illustrations still while scrolling. */
 .campus-arrow{display:inline-block;vertical-align:middle;flex-shrink:0}
 @media(hover:none),(prefers-reduced-motion:reduce){.dish-tile img,.wall-sparkles span,.hero-main-dish,.hero-cute-fish,.hero-cute-dumpling,.floating-label,.orbit{animation:none!important}.wall-glow{display:none}.food-viewer::backdrop{backdrop-filter:none}}
+@media(max-width:600px){.welcome-visual{overflow:clip}.welcome-visual .orbit{inset:0!important;transform:none!important}}

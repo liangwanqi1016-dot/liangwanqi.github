@@ -67,9 +67,17 @@ form.addEventListener("submit", async function (event) {
   controls.disabled = true;
   status.textContent = translate("Processing... 서버가 WAV를 생성하고 있습니다.");
 
+  let context = null;
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) { context = new AudioContextClass(); context.resume().catch(() => {}); }
+  } catch (_) {}
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 180000);
   try {
     if (form.dataset.api && window.CampusServers) await window.CampusServers.ready(new URL(form.dataset.api).origin);
     const response = await fetch(form.dataset.api || "/api/tts", {
+      signal: controller.signal,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -86,34 +94,38 @@ form.addEventListener("submit", async function (event) {
       throw new Error("서버가 WAV 대신 다른 응답을 보냈습니다.");
     }
     const blob = await response.blob();
-    const context = new (window.AudioContext || window.webkitAudioContext)();
-    let buffer;
-    try {
-      buffer = await context.decodeAudioData(await blob.arrayBuffer());
-    } finally {
-      await context.close();
-    }
-    if (!Number.isFinite(buffer.duration) || buffer.duration <= 0) {
-      throw new Error("음성 길이를 확인할 수 없습니다.");
-    }
-    document.querySelector("#tts-time").textContent =
-      (response.headers.get("X-Processing-Ms") || "측정 불가") + " ms";
-    document.querySelector("#tts-duration").textContent = buffer.duration.toFixed(2) + " s";
-    document.querySelector("#tts-size").textContent = (blob.size / 1024).toFixed(1) + " KiB";
-    result.hidden = false;
-    decodedAudio = buffer;
-    drawWaveform(buffer);
+    // First expose the real WAV. Waveform support must not block listening.
     audioURL = URL.createObjectURL(blob);
     audio.src = audioURL;
     audio.hidden = false;
     download.href = audioURL;
     download.hidden = false;
-    status.textContent = translate("완료 · WAV를 받아 파형을 그렸습니다.");
+    document.querySelector('#tts-time').textContent = (response.headers.get('X-Processing-Ms') || '—') + ' ms';
+    document.querySelector('#tts-size').textContent = (blob.size / 1024).toFixed(1) + ' KiB';
+    result.hidden = false;
+    try {
+      if (!context) throw new Error('Audio decoding unavailable');
+      const buffer = await Promise.race([
+        context.decodeAudioData(await blob.arrayBuffer()),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Waveform timeout')), 8000))
+      ]);
+      decodedAudio = buffer;
+      canvas.hidden = false;
+      document.querySelector('#tts-duration').textContent = buffer.duration.toFixed(2) + ' s';
+      drawWaveform(buffer);
+      status.textContent = translate('완료 · WAV를 받아 파형을 그렸습니다.');
+    } catch (_) {
+      canvas.hidden = true;
+      document.querySelector('#tts-duration').textContent = '—';
+      status.textContent = translate('음성이 준비되었습니다. 재생하거나 다운로드하세요.');
+    }
   } catch (error) {
     result.hidden = true;
     decodedAudio = null;
     status.textContent = translate("음성을 확인하지 못했습니다. {error}", {error: error.message});
   } finally {
+    clearTimeout(timeout);
+    if (context) context.close().catch(() => {});
     controls.disabled = false;
   }
 });

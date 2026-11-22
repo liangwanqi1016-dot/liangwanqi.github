@@ -85,8 +85,8 @@ def process_image():
         with warnings.catch_warnings():
             warnings.simplefilter("error", Image.DecompressionBombWarning)
             with Image.open(BytesIO(raw)) as header:
-                if header.format not in {"JPEG", "PNG"}:
-                    return {"error": "JPEG 또는 PNG 파일을 사용하세요."}, 400
+                if header.format not in {"JPEG", "PNG", "WEBP"}:
+                    return {"error": "JPEG, PNG 또는 WebP 파일을 사용하세요."}, 400
                 width, height = header.size
                 if width * height > 8_000_000:
                     return {"error": "800만 픽셀 이하로 줄여 주세요."}, 413
@@ -96,7 +96,7 @@ def process_image():
             return {"error": "이미지를 읽지 못했습니다."}, 400
     except (UnidentifiedImageError, OSError, ValueError, SyntaxError,
             Image.DecompressionBombError, Image.DecompressionBombWarning, cv2.error):
-        return {"error": "올바른 JPEG/PNG 이미지인지 확인하세요."}, 400
+        return {"error": "올바른 JPEG/PNG/WebP 이미지인지 확인하세요."}, 400
 
     # 수업용 서버가 큰 사진도 처리하도록 긴 변을 최대 1600px로 줄입니다.
     height, width = image.shape[:2]

@@ -4,8 +4,8 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>서버 이미지 실험실</title>
 <link rel="stylesheet" href="../fast/week6/style.css">
-<script src="../fast/week6/image.js" defer></script>
-<script src="../fast/week6/campus-ui.js" defer></script><style>main>header::after{background-image:url("../fast/week6/photo-art.webp")}</style><link rel="stylesheet" href="../fast/connection.css"><script src="../fast/connection.js" defer></script></head>
+<script src="../fast/week6/image.js?v=20261122mobile" defer></script>
+<script src="../fast/week6/campus-ui.js?v=20261122mobile" defer></script><style>main>header::after{background-image:url("../fast/week6/photo-art.webp")}</style><link rel="stylesheet" href="../fast/connection.css"><script src="../fast/connection.js" defer></script></head>
 <body data-backends="https://campus-image-week6.onrender.com" data-theme="campus-20261120"><header class="site-header"><div class="wrap header-row"><a class="brand" data-course-home href="https://liangwanqi1016-dot.github.io/liangwanqi.github/" data-i18n="캠퍼스 다이어리">캠퍼스 다이어리</a><div class="language-switch" role="group" aria-label="Language"><button type="button" data-lang="ko" lang="ko">한국어</button><span>/</span><button type="button" data-lang="zh" lang="zh-CN">中文</button><span>/</span><button type="button" data-lang="en" lang="en">English</button></div></div></header><aside class="backend-status" role="status" aria-live="polite"><span data-connection>서버에 연결 중입니다. 페이지는 먼저 둘러볼 수 있어요.</span> <button type="button" data-retry hidden>↻</button></aside><main>
 <header><p class="eyebrow">WEEK 06 · IMAGE</p><h1 data-i18n="캠퍼스 사진 실험실">캠퍼스 사진 실험실</h1>
 <p data-i18n="브라우저는 사진과 옵션을 보내고, 서버의 Python이 픽셀을 계산합니다.">브라우저는 사진과 옵션을 보내고, 서버의 Python이 픽셀을 계산합니다.</p>
@@ -14,7 +14,7 @@
 <form id="image-form" action="https://campus-image-week6.onrender.com/api/process" data-api="https://campus-image-week6.onrender.com/api/process" method="post" enctype="multipart/form-data">
 <fieldset id="controls">
 <label for="image" data-i18n="사진 선택 · JPEG/PNG, 5 MiB 이하, 800만 픽셀 이하">사진 선택 · JPEG/PNG, 5 MiB 이하, 800만 픽셀 이하</label>
-<input id="image" name="image" type="file" accept="image/jpeg,image/png" required>
+<input id="image" name="image" type="file" accept="image/*" required>
 <label for="operation" data-i18n="처리 방법">처리 방법</label>
 <select id="operation" name="operation"><option value="grayscale" data-i18n="Grayscale · 흑백">Grayscale · 흑백</option><option value="blur" data-i18n="Gaussian Blur · 흐리게">Gaussian Blur · 흐리게</option><option value="edge" data-i18n="Edge Detection · 윤곽선">Edge Detection · 윤곽선</option></select>
 <label for="kernel" data-i18n="Blur 커널 · 홀수 3~51 (Blur에서만 사용)">Blur 커널 · 홀수 3~51 (Blur에서만 사용)</label>

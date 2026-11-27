@@ -9,7 +9,7 @@
 | --- | --- | --- |
 | 4주차 실습 1 | 장소 탐험 (버튼 → 설명·Google 지도 전환) | https://liangwanqi1016-dot.github.io/liangwanqi.github/campus/map.html |
 | 4주차 실습 2 | Google Trends 검색 관심도 (DJI / Insta360) | https://liangwanqi1016-dot.github.io/liangwanqi.github/stats/ |
-| 4주차 실습 3 | Canvas 게임 (캠퍼스 별 모으기) | https://liangwanqi1016-dot.github.io/liangwanqi.github/game/ |
+| 4주차 실습 3 | Canvas 게임 (별 먹는 캠퍼스 뱀) | https://liangwanqi1016-dot.github.io/liangwanqi.github/game/ |
 | 5주차 | 음식 취향 밸런스 게임 | https://liangwanqi1016-dot.github.io/liangwanqi.github/food/ |
 | 6주차 실습 1 | 이미지 처리 (Render) | https://campus-image-week6.onrender.com/image |
 | 6주차 실습 2 | 서버 TTS (로컬 실행, 시연용 Render 추가 배포) | https://campus-tts-week6.onrender.com/tts |
@@ -68,21 +68,16 @@ GitHub Pages에서 보이는 4·5주차 화면은 최상위 폴더(`campus/`, `s
 - [제품군 원출처](https://trends.google.com/trends/explore?date=2025-01-01%202025-12-31&q=DJI%20Osmo%20Action,DJI%20Osmo%20Pocket,DJI%20drone,DJI%20Osmo%20360,DJI%20Osmo%20Mobile&hl=en)
 - 라이브러리와 라이선스 파일은 기존 `vendor/`를 유지합니다. 원본 데이터에 이용자 개인 정보는 포함하지 않습니다.
 
-### 실습 3 · Canvas 게임 「캠퍼스 별 모으기」
+### 실습 3 · Canvas 게임 「별 먹는 캠퍼스 뱀」
 
 - 주소: https://liangwanqi1016-dot.github.io/liangwanqi.github/game/
-- 아이디어: 수업 사이 쉬는 시간에 캠퍼스에 숨은 별을 모으는 짧은 게임.
-- 조작과 규칙: 노란 별을 누르면 +1점, 빨간 함정을 누르면 −2점(최저 0점). 20초 안에 12점을 모으면 성공. 휴대폰은 터치, 컴퓨터는 클릭(`pointerdown`)으로 조작합니다.
-- 화면: 점수, 남은 시간, 최고 점수를 표시하고, 끝나면 결과 메시지를 보여 줍니다.
-- 시작·재시작: 시작 버튼을 누르면 이전 `setInterval` 타이머를 `clearInterval`로 정리한 뒤 점수·시간을 초기화합니다.
-- Copilot 첫 질문: ✍️ (직접 작성) 예: “HTML canvas로 20초 동안 별을 눌러 점수를 모으는 게임을 만들어 줘…”
-- 수정 요청과 개선점: ✍️ (직접 작성) 예: “휴대폰 터치 좌표가 어긋나서 화면 좌표를 Canvas 좌표로 변환해 달라고 요청”
-- 확인한 동작: 별 +1, 함정 −2, 0점 아래로 내려가지 않음, 20초 종료, 12점 성공 메시지, 재시작 후 타이머 중복 없음.
-- 이미지·소리: 사용하지 않고 도형과 글자로만 그렸습니다.
-
-![게임 모바일 화면](screenshots/week4-game-mobile.jpg)
-
----
+- 별을 먹는 주제를 유지하고 조작을 **뱀 이동 게임**으로 바꿨습니다. 별마다 1점·몸 1칸 증가, 12개를 먹으면 성공합니다. 벽이나 자기 몸에 닿으면 종료합니다.
+- Canvas 600×420을 20×14칸으로 나누고 입력 방향 → 다음 머리 위치 → 충돌 → 성장/별 재배치 순서로 처리합니다. 별은 몸과 겹치지 않는 칸에 생성합니다.
+- PC 방향키/WASD, 휴대폰 스와이프·방향 버튼, 일시정지/계속하기, 다시 시작/초기화를 제공합니다. 즉시 반대 방향과 한 이동 주기 내 여러 회전을 막았습니다.
+- 제한 시간 대신 경과 시간을 표시합니다. 별을 먹으면 조금 빨라집니다(270ms에서 최소 140ms). 최고 기록은 현재 페이지의 변수에만 저장합니다. 탭 전환·페이지 이탈 시 자동 일시정지합니다.
+- 따뜻한 색상·캠퍼스 삽화 배경과 한국어·中文·English, 기존 지도·통계·과제 모음 링크를 유지했습니다.
+- 검증: 성장·별 위치·반대 방향 차단·벽/몸/움직이는 꼬리 충돌·12점 완료·일시정지/계속·스와이프·재시작·3개 언어를 로직 테스트로 확인했습니다. 실제 휴대폰 기종별 검증은 별도로 필요합니다.
+- AI 도움: “먹는 별을 유지하면서 뱀처럼 이동하는 방식으로 바꾸기”를 요청하고, 타이머 중복·입력·충돌과 재시작을 확인했습니다.
 
 ## 5주차 · 음식 취향 테스트 「나의 푸드 스타일」
 
@@ -321,3 +316,4 @@ python -m flask --app app run --debug --port 5000
 
 - 6주차: 일반 form 버튼도 사진을 먼저 준비한 뒤 실제 브라우저 form POST로 PNG 결과를 엽니다. 4032×3024 테스트 사진이 1600×1200으로 제출되는 것을 확인했습니다. fetch 결과 표시 방식과는 구분합니다.
 - 7주차: 메뉴·식사 상황·추천 이유·팁을 조합한 가상 추천을 만듭니다. 2계정/4추천을 유지하며 한국어·中文·English를 지원하고 기존 연습 글과 같은 내용은 피합니다. 선택적으로 연습 글에 모의 신고 1건을 넣어 관리자 필터를 시험할 수 있습니다. 실제 이용자 글에는 모의 신고를 넣지 않습니다.
+

@@ -4,14 +4,14 @@ const canvas=document.querySelector('#gameCanvas'),ctx=canvas.getContext('2d');
 const COLS=20,ROWS=14,CELL=30,GOAL=12,DIRECTIONS={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}};
 const MOVE_MS=310;
 let previous=[],movedAt=0,animation=null;
-let language='ko',snake=[],direction={x:1,y:0},nextDirection={x:1,y:0},queued=false,food=null,score=0,best=0,state='ready',messageKey='ready',timer=null,started=0,elapsed=0;
+let language='ko',snake=[],direction={x:1,y:0},nextDirection={x:1,y:0},queued=false,food=[],score=0,best=0,state='ready',messageKey='ready',timer=null,started=0,elapsed=0;
 const start=document.querySelector('#startBtn'),pause=document.querySelector('#pauseBtn');
 function renderText(){const t=copy[language];document.querySelector('#score').textContent=score+' / '+GOAL;document.querySelector('#time').textContent=Math.floor(elapsed/60000)+':'+String(Math.floor(elapsed/1000)%60).padStart(2,'0');document.querySelector('#best').textContent=String(best);document.querySelector('#message').textContent=t[messageKey].replace('{score}',String(score));start.textContent=t[state==='ready'?'start':state==='playing'||state==='paused'?'restart':'again'];pause.textContent=t[state==='paused'?'resume':'pause'];pause.disabled=!['playing','paused'].includes(state)}
 function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath()}
 function star(x,y){ctx.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,r=i%2?5:12;const px=x+Math.cos(a)*r,py=y+Math.sin(a)*r;i?ctx.lineTo(px,py):ctx.moveTo(px,py)}ctx.closePath();ctx.fillStyle='#e6ad43';ctx.fill();ctx.strokeStyle='#936332';ctx.lineWidth=1.4;ctx.stroke()}
 function draw(now=performance.now()){
 ctx.clearRect(0,0,600,420);ctx.fillStyle='rgba(248,243,233,.94)';ctx.fillRect(0,0,600,420);
-if(food)star((food.x+.5)*CELL,(food.y+.5)*CELL);
+food.forEach(p=>star((p.x+.5)*CELL,(p.y+.5)*CELL));
 const progress=state==='playing'?Math.min(1,Math.max(0,(now-movedAt)/MOVE_MS)):1;
 const points=snake.map((p,i)=>{const old=previous[i]||previous[previous.length-1]||p;return {x:(old.x+(p.x-old.x)*progress+.5)*CELL,y:(old.y+(p.y-old.y)*progress+.5)*CELL}});
 ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#95a383';ctx.lineWidth=24;ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();
@@ -20,11 +20,11 @@ if(state==='paused'){ctx.fillStyle='rgba(248,243,233,.65)';ctx.fillRect(0,0,600,
 }
 function animate(now){animation=null;if(state!=='playing')return;draw(now);animation=requestAnimationFrame(animate)}
 function startAnimation(){if(animation===null)animation=requestAnimationFrame(animate)}
-function spawnFood(){const empty=[];for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++)if(!snake.some(p=>p.x===x&&p.y===y))empty.push({x,y});food=empty.length?empty[Math.floor(Math.random()*empty.length)]:null}
+function spawnFood(){const empty=[];for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++)if(!snake.some(p=>p.x===x&&p.y===y)&&!food.some(p=>p.x===x&&p.y===y))empty.push({x,y});while(food.length<6&&empty.length){const index=Math.floor(Math.random()*empty.length);food.push(empty.splice(index,1)[0])}}
 function stopTimer(){if(animation!==null)cancelAnimationFrame(animation);animation=null;if(timer!==null)clearTimeout(timer);timer=null}
-function setup(){stopTimer();snake=[{x:6,y:7},{x:5,y:7},{x:4,y:7},{x:3,y:7}];direction={x:1,y:0};nextDirection={x:1,y:0};queued=false;score=0;elapsed=0;previous=snake.map(p=>({...p}));movedAt=performance.now();spawnFood()}
+function setup(){stopTimer();snake=[{x:6,y:7},{x:5,y:7},{x:4,y:7},{x:3,y:7}];direction={x:1,y:0};nextDirection={x:1,y:0};queued=false;score=0;elapsed=0;previous=snake.map(p=>({...p}));movedAt=performance.now();food=[];spawnFood()}
 function finish(won){stopTimer();elapsed=performance.now()-started;state=won?'won':'over';messageKey=won?'won':'lost';best=Math.max(best,score);renderText();draw()}
-function step(){if(state!=='playing')return;previous=snake.map(p=>({...p}));movedAt=performance.now();direction=nextDirection;queued=false;const head={x:snake[0].x+direction.x,y:snake[0].y+direction.y};const eats=food&&head.x===food.x&&head.y===food.y;const body=eats?snake:snake.slice(0,-1);if(head.x<0||head.x>=COLS||head.y<0||head.y>=ROWS||body.some(p=>p.x===head.x&&p.y===head.y)){finish(false);return}snake.unshift(head);if(eats){score++;best=Math.max(best,score);messageKey='eat';if(score>=GOAL){finish(true);return}spawnFood()}else snake.pop();elapsed=performance.now()-started;renderText();draw();timer=setTimeout(step,MOVE_MS)}
+function step(){if(state!=='playing')return;previous=snake.map(p=>({...p}));movedAt=performance.now();direction=nextDirection;queued=false;const head={x:snake[0].x+direction.x,y:snake[0].y+direction.y};const foodIndex=food.findIndex(p=>p.x===head.x&&p.y===head.y);const eats=foodIndex!==-1;const body=eats?snake:snake.slice(0,-1);if(head.x<0||head.x>=COLS||head.y<0||head.y>=ROWS||body.some(p=>p.x===head.x&&p.y===head.y)){finish(false);return}snake.unshift(head);if(eats){food.splice(foodIndex,1);score++;best=Math.max(best,score);messageKey='eat';if(score>=GOAL){finish(true);return}spawnFood()}else snake.pop();elapsed=performance.now()-started;renderText();draw();timer=setTimeout(step,MOVE_MS)}
 function begin(){setup();state='playing';messageKey='running';started=performance.now();renderText();draw();startAnimation();timer=setTimeout(step,MOVE_MS)}
 function turn(name){if(state!=='playing'||queued||!DIRECTIONS[name])return;const next=DIRECTIONS[name];if((next.x===direction.x&&next.y===direction.y)||(next.x===-direction.x&&next.y===-direction.y))return;nextDirection={...next};queued=true}
 function togglePause(){if(state==='playing'){elapsed=performance.now()-started;stopTimer();state='paused';messageKey='paused'}else if(state==='paused'){started=performance.now()-elapsed;state='playing';messageKey='running';previous=snake.map(p=>({...p}));movedAt=performance.now();startAnimation();timer=setTimeout(step,MOVE_MS)}renderText();draw()}

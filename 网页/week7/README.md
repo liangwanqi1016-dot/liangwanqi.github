@@ -62,14 +62,14 @@ Render의 Environment에 `SECRET_KEY`(64자리 무작위 값), `WEEK7_ADMIN_USER
 - Render Free, Python 3.12.12, Root Directory `week7`, Build `pip install -r requirements.txt`.
 - Start: `python -m flask --app app init-db && python -m flask --app app ensure-admin && gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 2`.
 - 환경변수: SECRET_KEY, WEEK7_ADMIN_USERNAME, WEEK7_ADMIN_PASSWORD, APP_HTTPS=1, PYTHON_VERSION=3.12.12. 실제 비밀값은 공개하지 않습니다.
-- 현재 관리 화면: 공통 로그인 후 관리자 권한 확인, 내용 검색, 신고 확인, 게시글 삭제와 계정 관리. 연습 데이터 생성·정리 UI는 제거했습니다.
+- 현재 관리 화면: 공통 로그인 후 관리자 권한 확인, 내용 검색, 신고 확인, 게시글 삭제와 계정 관리. 연습 데이터 생성·정리 UI는 관리 화면 맨 위 “연습 데이터” 패널에 다시 넣었습니다(2026-11-27).
 - 무료 서버는 비활동 시 잠들어 첫 접속이 느릴 수 있으며 재배포·재시작 시 SQLite 데이터가 초기화될 수 있습니다. 시작 명령은 DB 및 관리자 계정을 다시 준비합니다.
 
-![온라인 첫 화면](screenshots/week7-live.png)
+![온라인 첫 화면](../../screenshots/week7-live-render.jpg)
 
-![관리자 검색과 연습 데이터](screenshots/week7-admin.png)
+![관리자 검색과 연습 데이터](../../screenshots/week7-admin-test-data.jpg)
 
-![연습 데이터 정리 후](screenshots/week7-admin-clean.png)
+![연습 데이터 정리 후](../../screenshots/week7-admin-after-cleanup.jpg)
 
 
 ## 디자인 수정 기록 · 2026-11-11
@@ -87,4 +87,4 @@ Render의 Environment에 `SECRET_KEY`(64자리 무작위 값), `WEEK7_ADMIN_USER
 
 ## 한식 일러스트와 화면 구성 · 2026-11-21
 
-만두, 붕어빵, 호떡, 송편 일러스트를 추가하고 홈페이지·로그인·게시판에 배치했습니다. 모든 새 음식 그림은 투명 배경을 사용합니다. 홈페이지의 공통 입구, 언어 선택과 자동 권한 분기는 유지했습니다. 관리자 화면에서는 연습 데이터 생성·삭제 UI를 제거하고 실제 게시글·신고·계정 관리만 표시합니다. 기존 데이터는 이 UI 변경으로 삭제하지 않습니다.
+만두, 붕어빵, 호떡, 송편 일러스트를 추가하고 홈페이지·로그인·게시판에 배치했습니다. 모든 새 음식 그림은 투명 배경을 사용합니다. 홈페이지의 공통 입구, 언어 선택과 자동 권한 분기는 유지했습니다. 관리자 화면에는 실제 게시글·신고·계정 관리와 함께 연습 데이터 생성·삭제 패널이 있습니다(2026-11-27 복원). 기존 데이터는 이 UI 변경으로 삭제하지 않습니다.

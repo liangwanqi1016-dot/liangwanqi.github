@@ -84,13 +84,13 @@
         <dt data-t="mSource">출처</dt>
         <dd><a href="https://trends.google.com/trends/explore?date=2025-01-01%202025-12-31&q=DJI,Insta360&hl=en" target="_blank" rel="noopener" data-t="sourceName">Google Trends · Worldwide · Web Search · All categories</a> <span data-t="sourceDate">(2026-11-27 CSV 다운로드)</span></dd>
         <dt data-t="mTarget">대상</dt>
-        <dd data-t="targetText">검색어 DJI / Insta360, DJI Osmo / Mini / Mavic / Ronin / Air (Topic 아님)</dd>
+        <dd data-t="targetText">브랜드: DJI / Insta360. 대분류 대표 검색어: 액션=DJI Osmo Action, 핸드헬드=DJI Osmo Pocket, 드론=DJI drone, 360도=DJI Osmo 360, 스마트폰 짐벌=DJI Osmo Mobile.</dd>
         <dt data-t="mPeriod">기간</dt>
         <dd data-t="periodText">2025-01-01–2025-12-31 · 주 시작일이 2025년인 52주 사용</dd>
         <dt data-t="mUnit">단위</dt>
         <dd data-t="unitText">검색 관심도 지수 0–100. 두 비교 요청은 별도로 정규화됩니다.</dd>
         <dt>CSV</dt>
-        <dd><a href="data/brand-interest-weekly-2025.csv" download>브랜드 / 品牌 / Brands CSV</a> · <a href="data/dji-series-monthly-2025.csv" download>제품군 / 系列 / Families CSV</a> · <a href="data/README.md">방법 / 方法 / Method</a></dd>
+        <dd><a href="data/brand-interest-weekly-2025.csv" download>브랜드 / 品牌 / Brands CSV</a> · <a href="data/dji-categories-monthly-2025.csv" download>대분류 / 大类 / Categories CSV</a> · <a href="data/README.md">방법 / 方法 / Method</a></dd>
       </dl>
     </section>
 
@@ -98,7 +98,7 @@
 
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" id="tab-year" aria-controls="panel-year" aria-selected="true" data-t="tabYear">① 브랜드 검색 관심도</button>
-      <button class="tab" role="tab" id="tab-month" aria-controls="panel-month" aria-selected="false" data-t="tabMonth">② 제품군 월별 관심도</button>
+      <button class="tab" role="tab" id="tab-month" aria-controls="panel-month" aria-selected="false" data-t="tabMonth">② 대분류 월별 관심도</button>
     </div>
 
     <section class="panel" id="panel-year" role="tabpanel" aria-labelledby="tab-year">
@@ -116,12 +116,12 @@
     </section>
 
     <section class="panel" id="panel-month" role="tabpanel" aria-labelledby="tab-month" hidden>
-      <p><a href="https://trends.google.com/trends/explore?date=2025-01-01%202025-12-31&q=DJI%20Osmo,DJI%20Mini,DJI%20Mavic,DJI%20Ronin,DJI%20Air&hl=en" target="_blank" rel="noopener">Google Trends / DJI products</a></p><h2 data-t="mTitle">DJI 주요 5개 제품군의 월별 검색 관심도 (2025)</h2>
-      <p class="sub" data-t="mQ">질문: 주요 제품군의 검색 관심도는 월별로 어떻게 달라질까?</p>
+      <p><a href="https://trends.google.com/trends/explore?date=2025-01-01%202025-12-31&q=DJI%20Osmo%20Action,DJI%20Osmo%20Pocket,DJI%20drone,DJI%20Osmo%20360,DJI%20Osmo%20Mobile&hl=en" target="_blank" rel="noopener">Google Trends / DJI products</a></p><h2 data-t="mTitle">DJI 대분류별 월간 검색 관심도 (2025)</h2>
+      <p class="sub" data-t="mQ">질문: 액션·핸드헬드·드론·360도 카메라·스마트폰 짐벌의 대표 검색어는 월별로 어떻게 달라질까?</p>
       <div class="controls">
-        <label><span data-t="group">표시할 항목</span> <select id="month-group"><option value="all" data-t="gTotal">전체</option><option value="DJI Osmo">DJI Osmo</option><option value="DJI Mini">DJI Mini</option><option value="DJI Mavic">DJI Mavic</option><option value="DJI Ronin">DJI Ronin</option><option value="DJI Air">DJI Air</option></select></label>
+        <label><span data-t="group">표시할 항목</span> <select id="month-group"><option value="all" data-t="gTotal">전체</option><option value="DJI Osmo Action">액션 카메라</option><option value="DJI Osmo Pocket">핸드헬드 카메라</option><option value="DJI drone">드론</option><option value="DJI Osmo 360">360도 카메라</option><option value="DJI Osmo Mobile">스마트폰 짐벌</option></select></label>
       </div>
-      <div class="chart-box"><canvas id="chart-month"></canvas></div><p><a href="data/google-trends-dji-series-2025-original.csv" download>원본 CSV / 原始CSV / Original CSV</a></p><details><summary>데이터 표 / 数据表 / Data table</summary><div style="overflow-x:auto"><table id="series-data"></table></div></details>
+      <div class="chart-box"><canvas id="chart-month"></canvas></div><p><a href="data/google-trends-dji-categories-2025-original.csv" download>원본 CSV / 原始CSV / Original CSV</a></p><details><summary>데이터 표 / 数据表 / Data table</summary><div style="overflow-x:auto"><table id="series-data"></table></div></details>
       <div class="note">
         <p><span class="tag" data-t="tagFact">사실</span><span data-t="m1">CSV loading…</span></p>
         <p><span class="tag" data-t="tagFact">사실</span><span data-t="m2">CSV loading…</span></p>
@@ -137,8 +137,8 @@
 
   <script src="vendor/papaparse.min.js"></script>
   <script src="vendor/chart.umd.min.js"></script>
-  <script src="stats-i18n.js?v=20261127trends"></script>
-  <script src="stats.js?v=20261127trends"></script>
+  <script src="stats-i18n.js?v=20261127categories"></script>
+  <script src="stats.js?v=20261127categories"></script>
 </body>
 </html>
 

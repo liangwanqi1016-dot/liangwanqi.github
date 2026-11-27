@@ -123,3 +123,7 @@ Object.assign(I18N.en,{"targetText": "Brands: DJI / Insta360. Category proxy ter
 Object.assign(I18N.ko,{lead:'2025년 브랜드 비교와 DJI 대분류별 검색 관심도를 Google Trends CSV로 살펴봅니다. 판매량이 아닙니다.'});
 Object.assign(I18N.zh,{lead:'读取Google Trends CSV，比较2025年品牌与DJI产品大类的代表搜索热度。这不是销量。'});
 Object.assign(I18N.en,{lead:'Compare brands and representative search interest by DJI product category using Google Trends CSV files for 2025. These are not sales figures.'});
+
+Object.assign(I18N.ko,{yTitle:'DJI · Insta360 연평균 검색 관심도 (2025)',yQ:'2025년 주간 지수 52개의 평균을 브랜드별 막대로 비교합니다.',brandLabel:'브랜드'});
+Object.assign(I18N.zh,{yTitle:'DJI与Insta360全年平均搜索热度（2025年）',yQ:'将2025年52周热度指数的平均值，以品牌柱状图对比。',brandLabel:'品牌'});
+Object.assign(I18N.en,{yTitle:'Annual average search interest: DJI vs Insta360 (2025)',yQ:'Compare each brand’s mean across 52 weekly interest indices in a bar chart.',brandLabel:'Brand'});

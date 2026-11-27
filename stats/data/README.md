@@ -4,7 +4,7 @@
 
 ## 1. 브랜드 비교
 
-`google-trends-brands-2025-original.csv`의 DJI / Insta360. 원본 53주에서 주 시작일이 2025년인 52주를 `brand-interest-weekly-2025.csv`로 정리했습니다. 그래프는 주간 추이, 본문은 52주 평균입니다.
+`google-trends-brands-2025-original.csv`의 DJI / Insta360. 원본 53주에서 주 시작일이 2025년인 52주를 `brand-interest-weekly-2025.csv`로 정리했습니다. 첫 번째는 52주 평균을 비교하는 브랜드 막대그래프입니다. 원본 주간 값은 다운로드 CSV로 확인할 수 있습니다.
 
 ## 2. DJI 대분류 비교
 

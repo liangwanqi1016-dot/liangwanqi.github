@@ -12,3 +12,13 @@
 
 /* A quiet, rounded play surface. */
 .game-stage{border-radius:18px;background:#f8f3e9}.game-stage:before{display:none}.game-card{border-radius:18px}.direction-pad button{border-radius:50%;background:#f5eddf;box-shadow:0 2px 0 #dfd0ba;transition:background .12s,transform .12s}.direction-pad button:active{transform:translateY(2px);box-shadow:none}.game-controls button{border-radius:12px}
+
+/* Mobile: keep the board and controls close together. */
+@media(max-width:600px){
+.game-main{padding-top:16px;padding-bottom:max(24px,env(safe-area-inset-bottom));width:calc(100% - 24px)}
+.game-heading{margin-bottom:14px;gap:10px}.game-heading h1{font-size:clamp(1.55rem,6.3vw,2rem);line-height:1.25}.game-heading p{font-size:13px;line-height:1.6;margin-top:7px}.game-stamp{display:none}
+.game-card{padding:12px 10px}.hud{margin-bottom:10px}.hud span{font-size:11px;overflow-wrap:anywhere}.hud strong{font-size:20px}.hud>div{padding:4px}
+#message{min-height:1.8em;margin-top:8px;font-size:13px}.game-controls{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr);gap:7px}.game-controls button{min-width:0;padding:9px 4px;min-height:44px;font-size:13px;touch-action:manipulation}
+.direction-pad{grid-template-columns:repeat(3,52px);grid-template-rows:repeat(2,48px);gap:5px;margin:12px auto 0}.direction-pad button{min-width:48px;min-height:48px;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.control-tip{font-size:12px;line-height:1.5;margin-top:10px}.game-layout{gap:16px}.game-stage{border-radius:12px}
+}

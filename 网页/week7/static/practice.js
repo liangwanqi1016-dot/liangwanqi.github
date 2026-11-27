@@ -1,0 +1,1 @@
+"use strict";(()=>{let lang='ko';try{lang=localStorage.getItem('campus.language')||lang}catch(_){}const field=document.querySelector('[name="practice_language"]');if(field)field.value=['ko','zh','en'].includes(lang)?lang:'ko';})();

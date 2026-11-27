@@ -10,7 +10,7 @@ python -m flask --app app run --debug --port 5000
 ```
 
 브라우저에서 http://127.0.0.1:5000 을 엽니다. VS Code Live Server로 HTML을 열지 않습니다.
-샘플 이미지는 `static/sample.png`입니다. 사진은 JPEG/PNG/WebP를 지원합니다. fetch 제출은 브라우저에서 디코딩 가능한 큰 사진을 긴 변 1600px로 줄이고, 원래 form 제출에는 서버의 5 MiB·800만 픽셀 제한이 적용됩니다.
+샘플 이미지는 `static/sample.png`입니다. 사진은 JPEG/PNG/WebP를 지원합니다. fetch 제출은 브라우저에서 디코딩 가능한 큰 사진을 긴 변 1600px로 줄이고, 일반 form 제출도 같은 준비 과정을 거친 뒤 브라우저의 실제 form POST로 PNG 문서를 엽니다. 서버에는 기존 5 MiB·800만 픽셀 제한을 유지합니다.
 
 ## 서버 TTS
 
@@ -59,3 +59,7 @@ Flask 페이지는 같은 출처로 API를 호출합니다. GitHub Pages의 빠�
 - 테스트 이미지: 자동 생성한 단색 JPEG 256×256/1024×1024, blur kernel 3/31. 흑백·엣지·블러는 PNG 200 응답을 확인했습니다. 실제 알고리즘 시간, 서버 시간, 클라이언트 왕복 시간은 [측정 CSV](evidence/render-image-timings.csv)에 저장했습니다.
 - form은 결과 PNG로 문서를 이동하고 fetch는 원본·결과·시간을 현재 문서에 표시합니다. 업로드는 FormData, TTS는 JSON, 반환은 PNG/WAV입니다. 실제 필터·합성은 Python 서버가 실행합니다.
 - 무료 서버는 쉬는 뒤 첫 접속이 느릴 수 있습니다. GitHub Pages의 화면은 먼저 표시하며 서버 연결 상태를 안내합니다. 모델 최초 로딩과 합성 계산 시간은 별도로 필요합니다.
+
+## 모바일 일반 form 수정 · 2026-11-27
+
+두 버튼 모두 업로드 전에 사진을 긴 변 1600px로 준비합니다. 일반 form은 FormDataEvent(구형 브라우저는 DataTransfer)로 준비한 파일을 실어 실제 문서 POST를 합니다. 필드를 다시 활성화한 뒤 직렬화하여 빠지는 값이 없도록 했습니다. fetch 방식과 달리 현재 탭이 PNG 응답으로 이동합니다. 원본 파일은 기기에서 변경하거나 서버에 영구 보관하지 않습니다.

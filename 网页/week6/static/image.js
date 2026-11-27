@@ -49,8 +49,8 @@ async function preparePhoto(file) {
 }
 
 form.addEventListener("submit", async function (event) {
-  // 이 버튼은 JavaScript 가로채기 없이 HTML form의 기본 제출을 사용합니다.
-  if (event.submitter && event.submitter.id === "native") return;
+  // Both buttons prepare phone photos; the native button still performs a document form POST.
+  const nativeSubmission = event.submitter && event.submitter.id === "native";
   event.preventDefault();
   const data = new FormData(form); // 비활성화 전에 입력을 담습니다.
   const controls = document.querySelector("#controls");
@@ -69,6 +69,26 @@ form.addEventListener("submit", async function (event) {
       }
     }
     if (form.dataset.api && window.CampusServers) await window.CampusServers.ready(new URL(form.dataset.api).origin);
+    if (nativeSubmission) {
+      const upload = data.get('image');
+      // FormDataEvent changes only the multipart file. No fetch or AJAX is used in this path.
+      if ('FormDataEvent' in window || 'onformdata' in form) {
+        form.addEventListener('formdata', event => event.formData.set('image', upload), {once:true});
+      } else {
+        // Older mobile browsers can supply the prepared File through the picker element.
+        try {
+          const transfer = new DataTransfer();
+          transfer.items.add(upload);
+          document.querySelector('#image').files = transfer.files;
+        } catch (_) {
+          throw new Error(translate('이 브라우저에서는 서버에서 처리 버튼을 사용해 주세요.'));
+        }
+      }
+      // Disabled fieldsets are excluded from ordinary form submission; enable before serializing.
+      controls.disabled = false;
+      HTMLFormElement.prototype.submit.call(form);
+      return;
+    }
     const response = await fetch(form.dataset.api || "/api/process", { method: "POST", body: data, signal: controller.signal });
     if (!response.ok) {
       let message = "처리에 실패했습니다. HTTP " + response.status;

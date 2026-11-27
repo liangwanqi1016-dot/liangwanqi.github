@@ -4,8 +4,8 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>서버 이미지 실험실</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<script src="{{ url_for('static', filename='image.js') }}?v=20261122mobile" defer></script>
-<script src="{{ url_for('static', filename='campus-ui.js') }}?v=20261122mobile" defer></script><style>main>header::after{background-image:url("{{ url_for('static', filename='photo-art.webp') }}")}</style></head>
+<script src="{{ url_for('static', filename='image.js') }}?v=20261127native" defer></script>
+<script src="{{ url_for('static', filename='campus-ui.js') }}?v=20261127native" defer></script><style>main>header::after{background-image:url("{{ url_for('static', filename='photo-art.webp') }}")}</style></head>
 <body data-theme="campus-20261120"><header class="site-header"><div class="wrap header-row"><a class="brand" data-course-home href="https://liangwanqi1016-dot.github.io/liangwanqi.github/" data-i18n="캠퍼스 다이어리">캠퍼스 다이어리</a><div class="language-switch" role="group" aria-label="Language"><button type="button" data-lang="ko" lang="ko">한국어</button><span>/</span><button type="button" data-lang="zh" lang="zh-CN">中文</button><span>/</span><button type="button" data-lang="en" lang="en">English</button></div></div></header><main>
 <header><p class="eyebrow">WEEK 06 · IMAGE</p><h1 data-i18n="캠퍼스 사진 실험실">캠퍼스 사진 실험실</h1>
 <p data-i18n="브라우저는 사진과 옵션을 보내고, 서버의 Python이 픽셀을 계산합니다.">브라우저는 사진과 옵션을 보내고, 서버의 Python이 픽셀을 계산합니다.</p>
@@ -21,7 +21,7 @@
 <input id="kernel" name="kernel" type="number" min="3" max="51" step="2" value="15" required>
 <div class="submit-options">
 <div class="submit-option"><button id="process" type="submit" aria-describedby="process-help" data-i18n="서버에서 처리">서버에서 처리</button><p id="process-help" data-i18n="JavaScript의 fetch로 사진을 보냅니다. 이 페이지에서 원본·결과와 처리 시간을 함께 봅니다.">JavaScript의 fetch로 사진을 보냅니다. 이 페이지에서 원본·결과와 처리 시간을 함께 봅니다.</p></div>
-<div class="submit-option"><button id="native" type="submit" aria-describedby="native-help" data-i18n="일반 form으로 보내기">일반 form으로 보내기</button><p id="native-help" data-i18n="브라우저가 form을 제출합니다. 현재 탭이 결과 PNG 화면으로 바뀌며, 뒤로 가면 이 페이지로 돌아옵니다.">브라우저가 form을 제출합니다. 현재 탭이 결과 PNG 화면으로 바뀌며, 뒤로 가면 이 페이지로 돌아옵니다.</p></div>
+<div class="submit-option"><button id="native" type="submit" aria-describedby="native-help" data-i18n="일반 form으로 보내기">일반 form으로 보내기</button><p id="native-help" data-i18n="사진을 줄인 뒤 일반 form으로 보냅니다. 결과 PNG가 현재 탭에 열리며 뒤로 가면 돌아옵니다.">사진을 줄인 뒤 일반 form으로 보냅니다. 결과 PNG가 현재 탭에 열리며 뒤로 가면 돌아옵니다.</p></div>
 </div>
 </fieldset>
 </form>

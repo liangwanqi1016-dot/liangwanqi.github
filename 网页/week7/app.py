@@ -4,6 +4,7 @@ import os
 import re
 import secrets
 import sqlite3
+from practice_data import make_recommendations
 from pathlib import Path
 
 from flask import Flask, abort, g, redirect, render_template, request, session, url_for
@@ -333,26 +334,33 @@ def create_test_data():
     db = get_db()
     password = secrets.token_urlsafe(12)
     password_hash = generate_password_hash(password)
-    samples = (
-        "[연습] 수업 후 정문 근처에서 먹는 따뜻한 비빔밥을 추천해요.",
-        "[연습] 친구와 나눠 먹기 좋은 떡볶이와 김밥 조합!",
-        "[연습] 도서관 공부를 마친 뒤 붕어빵 한 봉지 어때요?",
-        "[연습] 공강 점심은 든든한 김치찌개와 밥이 좋아요.",
-        "[연습] 매운 음식을 못 먹는 친구에게는 만둣국을 추천해요.",
-        "[연습] 아침 수업 전에는 요거트 볼과 따뜻한 차를 골라요.",
-        "[연습] 운동 후에는 반찬이 다양한 도시락으로 한 끼!",
-        "[연습] 축제 날 간식으로 달콤한 호떡을 함께 먹어요.",
-    )
+    language = request.form.get('practice_language', 'ko')
+    existing = [row['content'] for row in db.execute(
+        'SELECT comments.content FROM comments JOIN users ON users.id = comments.user_id WHERE users.is_test = 1'
+    )]
+    samples = make_recommendations(language, existing)
     names = []
-    for label in ("a", "b"):
+    practice_user_ids = []
+    practice_comment_ids = []
+    for author_index, label in enumerate(("a", "b")):
         username = f"test_{label}_{secrets.token_hex(4)}"
         cursor = db.execute(
             "INSERT INTO users (username, password_hash, is_test) VALUES (?, ?, 1)",
             (username, password_hash),
         )
         names.append(username)
-        for content in secrets.SystemRandom().sample(samples, 2):
-            db.execute("INSERT INTO comments (user_id, content) VALUES (?, ?)", (cursor.lastrowid, content))
+        practice_user_ids.append(cursor.lastrowid)
+        for content in samples[author_index * 2:author_index * 2 + 2]:
+            post = db.execute("INSERT INTO comments (user_id, content) VALUES (?, ?)", (cursor.lastrowid, content))
+            practice_comment_ids.append(post.lastrowid)
+    if request.form.get('practice_report') == '1':
+        reason = {
+            'ko': '[연습] 신고 필터·관리 처리를 확인하는 가상 신고입니다.',
+            'zh': '[练习] 用于测试举报筛选与管理的模拟举报，并非真实违规。',
+            'en': '[DEMO] A simulated report for testing moderation, not a real violation.',
+        }.get(language, '[연습] 신고 필터·관리 처리를 확인하는 가상 신고입니다.')
+        db.execute('INSERT INTO reports (comment_id, reporter_id, reason) VALUES (?, ?, ?)',
+                   (practice_comment_ids[0], practice_user_ids[1], reason))
     db.commit()
     session["test_credentials"] = {"names": names, "password": password}
     return redirect(url_for("admin"))

@@ -15,6 +15,8 @@
 | 6주차 실습 2 | 서버 TTS (로컬 실행, 시연용 Render 추가 배포) | https://campus-tts-week6.onrender.com/tts |
 | 7주차 | 캠퍼스 한 끼 게시판 (Render) | https://campus-meal-week7.onrender.com/ |
 
+모든 페이지는 오른쪽 위에서 한국어 · 中文 · English로 바꿀 수 있고, 고른 언어는 `localStorage`의 `campus.language`에 저장되어 다른 페이지에서도 이어집니다.
+
 Render 무료 서버는 쉬고 있다가 첫 접속 때 깨어나므로 처음 열 때 30초 정도 걸릴 수 있습니다.
 
 ## 폴더 구조

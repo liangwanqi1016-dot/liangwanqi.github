@@ -7,24 +7,24 @@
   <p data-i18n="신고와 글을 확인하고 필요할 때 글 삭제·계정 차단을 합니다. 이 화면은 관리자만 열 수 있습니다.">신고와 글을 확인하고 필요할 때 글 삭제·계정 차단을 합니다. 이 화면은 관리자만 열 수 있습니다.</p>
 <img class="admin-food-friend" src="{{ url_for('static', filename='tteok-cute.webp') }}" alt="" aria-hidden="true" width="1536" height="1024"></section>
 <div class="admin-workspace"><section class="panel test-data-panel">
-  <h2>연습 데이터</h2>
-  <p>연습 계정 2개와 <code>[연습]</code> 글 4개를 무작위로 만들어 신고·검색·차단을 시험합니다. 현재 연습 계정 {{ test_user_count }}개, 연습 글 {{ test_comment_count }}개.</p>
-  {% if test_notice %}<p class="notice" role="status">{{ test_notice }}</p>{% endif %}
+  <h2 data-i18n="연습 데이터">연습 데이터</h2>
+  <p><span data-i18n="연습 계정 2개와 [연습] 글 4개를 무작위로 만들어 신고·검색·차단을 시험합니다.">연습 계정 2개와 [연습] 글 4개를 무작위로 만들어 신고·검색·차단을 시험합니다.</span> <span data-i18n="현재 연습 계정">현재 연습 계정</span> {{ test_user_count }} · <span data-i18n="연습 글">연습 글</span> {{ test_comment_count }}</p>
+  {% if test_notice %}<p class="notice" role="status" data-i18n="연습 계정과 그 계정의 글을 삭제했습니다. 다른 계정과 글은 남아 있습니다.">연습 계정과 그 계정의 글을 삭제했습니다. 다른 계정과 글은 남아 있습니다.</p>{% endif %}
   {% if test_credentials %}
     <div class="notice" role="status">
-      <p><strong>생성된 연습 계정</strong> (이 화면을 떠나면 다시 표시되지 않습니다)</p>
+      <p><strong data-i18n="생성된 연습 계정">생성된 연습 계정</strong> (<span data-i18n="이 화면을 떠나면 다시 표시되지 않습니다">이 화면을 떠나면 다시 표시되지 않습니다</span>)</p>
       <ul>{% for name in test_credentials['names'] %}<li><code>{{ name }}</code></li>{% endfor %}</ul>
-      <p>공통 비밀번호: <code>{{ test_credentials['password'] }}</code></p>
+      <p><span data-i18n="공통 비밀번호">공통 비밀번호</span>: <code>{{ test_credentials['password'] }}</code></p>
     </div>
   {% endif %}
   <div class="test-data-actions">
     <form method="post" action="{{ url_for('create_test_data') }}">
       <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
-      <button class="primary" type="submit">연습 계정·글 무작위 생성</button>
+      <button class="primary" type="submit" data-i18n="연습 계정·글 무작위 생성">연습 계정·글 무작위 생성</button>
     </form>
-    <form method="post" action="{{ url_for('delete_test_data') }}" onsubmit="return confirm('연습 계정과 그 글을 모두 삭제할까요? 직접 만든 계정과 글은 남습니다.');">
+    <form method="post" action="{{ url_for('delete_test_data') }}" onsubmit="return confirm(window.CampusUI ? CampusUI.t('연습 계정과 그 글을 모두 삭제할까요? 직접 만든 계정과 글은 남습니다.') : '연습 계정과 그 글을 모두 삭제할까요?');">
       <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
-      <button class="delete-button" type="submit">연습 데이터 모두 삭제</button>
+      <button class="delete-button" type="submit" data-i18n="연습 데이터 모두 삭제">연습 데이터 모두 삭제</button>
     </form>
   </div>
 </section>

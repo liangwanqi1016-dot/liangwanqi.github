@@ -46,6 +46,10 @@
            margin-right: 4px; background: #efe4d2; }
     .error { display: none; background: #fde8e4; color: #8a2b14; border-radius: 10px; padding: 12px 14px;
              margin-bottom: 16px; }
+    .language-switch { display:flex; gap:6px; align-items:center; font-size:.9rem; }
+    .language-switch button { border:0; background:none; color:var(--muted); cursor:pointer; padding:4px 2px; font:inherit; }
+    .language-switch button[aria-pressed="true"] { color:var(--ink); font-weight:700; text-decoration:underline; }
+    .header-right { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
     footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 20px; }
     footer a { color: var(--muted); }
     @media (max-width: 600px) {
@@ -58,108 +62,131 @@
 </head>
 <body>
   <header>
-    <a href="../">캠퍼스 다이어리</a>
-    <nav>
-      <a href="../campus/map.html">장소 탐험</a>
-      <a href="../game/">미니게임</a>
-      <a href="../">과제 모음</a>
-    </nav>
+    <a href="../" data-t="brand">캠퍼스 다이어리</a>
+    <div class="header-right">
+      <nav>
+        <a href="../campus/map.html" data-t="navMap">장소 탐험</a>
+        <a href="../game/" data-t="navGame">미니게임</a>
+        <a href="../" data-t="navHome">과제 모음</a>
+      </nav>
+      <div class="language-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="ko" lang="ko" aria-pressed="true">한국어</button><span aria-hidden="true">/</span><button type="button" data-lang="zh" lang="zh-CN" aria-pressed="false">中文</button><span aria-hidden="true">/</span><button type="button" data-lang="en" lang="en" aria-pressed="false">English</button>
+      </div>
+    </div>
   </header>
 
   <main>
-    <h1>숫자로 보는 한국 관광지</h1>
-    <p class="lead">한국 유학 생활 중 가 보고 싶은 관광지 6곳에 사람들이 언제, 얼마나 찾아가는지 공개 통계로 살펴봅니다.</p>
+    <h1 data-t="h1">숫자로 보는 한국 관광지</h1>
+    <p class="lead" data-t="lead">한국 유학 생활 중 가 보고 싶은 관광지 6곳에 사람들이 언제, 얼마나 찾아가는지 공개 통계로 살펴봅니다.</p>
 
-    <section class="meta" aria-label="데이터 정보">
+    <section class="meta" aria-label="data">
       <dl>
-        <dt>출처</dt>
-        <dd><a href="https://know.tour.go.kr/stat/visitStatDis/table.do" target="_blank" rel="noopener">문화체육관광부·한국문화관광연구원, 관광지식정보시스템 「주요관광지점 입장객 통계」</a> (자료 갱신일 2026-08-18, 2026-11-27 조회)</dd>
-        <dt>대상</dt>
-        <dd>경복궁, 창덕궁(서울) · 불국사(경북) · 에버랜드(경기) · 남이섬유원지(강원) · 성산일출봉(제주)</dd>
-        <dt>기간</dt>
-        <dd>연도별 2019–2025년, 월별 2025년 1–12월</dd>
-        <dt>단위</dt>
-        <dd>입장객 수(명), 내국인·외국인·합계</dd>
+        <dt data-t="mSource">출처</dt>
+        <dd><a href="https://know.tour.go.kr/stat/visitStatDis/table.do" target="_blank" rel="noopener" data-t="sourceName">문화체육관광부·한국문화관광연구원, 관광지식정보시스템 「주요관광지점 입장객 통계」</a> <span data-t="sourceDate">(자료 갱신일 2026-08-18, 2026-11-27 조회)</span></dd>
+        <dt data-t="mTarget">대상</dt>
+        <dd data-t="targetText">경복궁, 창덕궁(서울) · 불국사(경북) · 에버랜드(경기) · 남이섬유원지(강원) · 성산일출봉(제주)</dd>
+        <dt data-t="mPeriod">기간</dt>
+        <dd data-t="periodText">연도별 2019–2025년, 월별 2025년 1–12월</dd>
+        <dt data-t="mUnit">단위</dt>
+        <dd data-t="unitText">입장객 수(명), 내국인·외국인·합계</dd>
         <dt>CSV</dt>
-        <dd><a href="data/korea_attractions_2019_2025.csv" download>korea_attractions_2019_2025.csv 내려받기</a> (342행, 7열)</dd>
+        <dd><a href="data/korea_attractions_2019_2025.csv" download><span>korea_attractions_2019_2025.csv</span> <span data-t="download">내려받기</span></a> <span data-t="csvSize">(342행, 7열)</span></dd>
       </dl>
     </section>
 
     <div class="error" id="error" role="alert"></div>
 
-    <div class="tabs" role="tablist" aria-label="그래프 선택">
-      <button class="tab" role="tab" id="tab-year" aria-controls="panel-year" aria-selected="true">① 연도별 변화</button>
-      <button class="tab" role="tab" id="tab-month" aria-controls="panel-month" aria-selected="false">② 2025년 월별 변화</button>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-year" aria-controls="panel-year" aria-selected="true" data-t="tabYear">① 연도별 변화</button>
+      <button class="tab" role="tab" id="tab-month" aria-controls="panel-month" aria-selected="false" data-t="tabMonth">② 2025년 월별 변화</button>
     </div>
 
     <section class="panel" id="panel-year" role="tabpanel" aria-labelledby="tab-year">
-      <h2>관광지별 연간 입장객 수 (2019–2025)</h2>
-      <p class="sub">질문: 코로나19 이전과 비교해 관광지마다 입장객이 얼마나 회복되었을까?</p>
+      <h2 data-t="yTitle">관광지별 연간 입장객 수 (2019–2025)</h2>
+      <p class="sub" data-t="yQ">질문: 코로나19 이전과 비교해 관광지마다 입장객이 얼마나 회복되었을까?</p>
       <div class="controls">
-        <label>구분 <select id="year-group"><option>합계</option><option>내국인</option><option>외국인</option></select></label>
+        <label><span data-t="group">구분</span> <select id="year-group"><option value="합계" data-t="gTotal">합계</option><option value="내국인" data-t="gDom">내국인</option><option value="외국인" data-t="gFor">외국인</option></select></label>
       </div>
-      <div class="chart-box"><canvas id="chart-year" aria-label="관광지별 연간 입장객 꺾은선 그래프"></canvas></div>
+      <div class="chart-box"><canvas id="chart-year"></canvas></div>
       <div class="note">
-        <p><span class="tag">사실</span>(합계 기준) 6곳 모두 2020년에 입장객이 크게 줄었습니다. 예를 들어 경복궁은 2019년 약 535만 명에서 2020년 약 102만 명으로 줄었습니다. 경복궁은 2025년 약 689만 명으로 2019년보다 많아졌고, 같은 기간 외국인 입장객도 약 147만 명에서 약 278만 명으로 늘었습니다.</p>
-        <p><span class="tag">사실</span>반면 에버랜드는 2023년 약 588만 명에서 2025년 약 473만 명으로 줄었고, 성산일출봉도 2025년 약 89만 명으로 2019년(약 171만 명)의 절반 정도입니다.</p>
-        <p><span class="tag">해석</span>궁궐처럼 외국인 방문이 많은 곳은 회복이 빨랐던 것으로 보이지만, 이 자료에는 방문 이유가 없어 원인은 추측입니다. 또한 6곳만 고른 자료라 한국 관광 전체 흐름으로 일반화할 수는 없습니다.</p>
+        <p><span class="tag" data-t="tagFact">사실</span><span data-t="y1">(합계 기준) 6곳 모두 2020년에 입장객이 크게 줄었습니다. 예를 들어 경복궁은 2019년 약 535만 명에서 2020년 약 102만 명으로 줄었습니다. 경복궁은 2025년 약 689만 명으로 2019년보다 많아졌고, 같은 기간 외국인 입장객도 약 147만 명에서 약 278만 명으로 늘었습니다.</span></p>
+        <p><span class="tag" data-t="tagFact">사실</span><span data-t="y2">반면 에버랜드는 2023년 약 588만 명에서 2025년 약 473만 명으로 줄었고, 성산일출봉도 2025년 약 89만 명으로 2019년(약 171만 명)의 절반 정도입니다.</span></p>
+        <p><span class="tag" data-t="tagInterp">해석</span><span data-t="y3">궁궐처럼 외국인 방문이 많은 곳은 회복이 빨랐던 것으로 보이지만, 이 자료에는 방문 이유가 없어 원인은 추측입니다. 또한 6곳만 고른 자료라 한국 관광 전체 흐름으로 일반화할 수는 없습니다.</span></p>
       </div>
     </section>
 
     <section class="panel" id="panel-month" role="tabpanel" aria-labelledby="tab-month" hidden>
-      <h2>관광지별 월별 입장객 수 (2025년)</h2>
-      <p class="sub">질문: 같은 해 안에서 관광지는 어느 달에 가장 붐빌까?</p>
+      <h2 data-t="mTitle">관광지별 월별 입장객 수 (2025년)</h2>
+      <p class="sub" data-t="mQ">질문: 같은 해 안에서 관광지는 어느 달에 가장 붐빌까?</p>
       <div class="controls">
-        <label>구분 <select id="month-group"><option>합계</option><option>내국인</option><option>외국인</option></select></label>
+        <label><span data-t="group">구분</span> <select id="month-group"><option value="합계" data-t="gTotal">합계</option><option value="내국인" data-t="gDom">내국인</option><option value="외국인" data-t="gFor">외국인</option></select></label>
       </div>
-      <div class="chart-box"><canvas id="chart-month" aria-label="관광지별 2025년 월별 입장객 꺾은선 그래프"></canvas></div>
+      <div class="chart-box"><canvas id="chart-month"></canvas></div>
       <div class="note">
-        <p><span class="tag">사실</span>(합계 기준) 경복궁(약 105만 명), 에버랜드(약 71만 명), 성산일출봉 등은 10월에 가장 많았고, 4–5월에도 높았습니다. 창덕궁과 불국사는 10–11월이 가장 많았습니다.</p>
-        <p><span class="tag">사실</span>남이섬유원지는 다른 곳과 달리 11–12월(각 약 27만 명)이 가장 많았고, 서울의 두 궁궐은 7–8월에 크게 줄었습니다.</p>
-        <p><span class="tag">해석</span>봄·가을의 좋은 날씨와 단풍, 여름 더위가 영향을 준 것으로 추측되지만 날씨 자료와 비교한 것은 아닙니다. 2025년 한 해만 보았기 때문에 매년 같은 패턴인지는 알 수 없습니다.</p>
+        <p><span class="tag" data-t="tagFact">사실</span><span data-t="m1">(합계 기준) 경복궁(약 105만 명), 에버랜드(약 71만 명), 성산일출봉 등은 10월에 가장 많았고, 4–5월에도 높았습니다. 창덕궁과 불국사는 10–11월이 가장 많았습니다.</span></p>
+        <p><span class="tag" data-t="tagFact">사실</span><span data-t="m2">남이섬유원지는 다른 곳과 달리 11–12월(각 약 27만 명)이 가장 많았고, 서울의 두 궁궐은 7–8월에 크게 줄었습니다.</span></p>
+        <p><span class="tag" data-t="tagInterp">해석</span><span data-t="m3">봄·가을의 좋은 날씨와 단풍, 여름 더위가 영향을 준 것으로 추측되지만 날씨 자료와 비교한 것은 아닙니다. 2025년 한 해만 보았기 때문에 매년 같은 패턴인지는 알 수 없습니다.</span></p>
       </div>
     </section>
   </main>
 
   <footer>
-    <a href="../campus/map.html">← 장소 탐험으로</a> · <a href="../game/">미니게임으로 →</a><br>
-    웹 프로그래밍 4주차 실습 2 · 공개 데이터 시각화
+    <a href="../campus/map.html" data-t="fBack">← 장소 탐험으로</a> · <a href="../game/" data-t="fGame">미니게임으로 →</a><br>
+    <span data-t="fNote">웹 프로그래밍 4주차 실습 2 · 공개 데이터 시각화</span>
   </footer>
 
   <script src="vendor/papaparse.min.js"></script>
   <script src="vendor/chart.umd.min.js"></script>
+  <script src="stats-i18n.js"></script>
   <script>
     // ===== 1. 설정 =====
     const CSV_URL = "data/korea_attractions_2019_2025.csv";
-    const PLACES = ["경복궁", "창덕궁", "불국사", "에버랜드", "남이섬유원지", "성산일출봉"];
+    const PLACES = ["경복궁", "창덕궁", "불국사", "에버랜드", "남이섬유원지", "성산일출봉"];  // CSV의 관광지 값
     const COLORS = ["#c8643b", "#e0a23a", "#4f8a5b", "#4a7bb7", "#8b5fa8", "#2f9c9c"];
     const YEARS = ["2019", "2020", "2021", "2022", "2023", "2024", "2025"];
     const MONTHS = Array.from({ length: 12 }, (_, i) => "2025-" + String(i + 1).padStart(2, "0"));
 
     let rows = [];          // CSV에서 읽은 행
+    let lang = "ko";        // 현재 언어 (ko / zh / en)
     const charts = {};      // 만든 그래프 보관
+    const t = key => (I18N[lang] && I18N[lang][key]) || I18N.ko[key] || key;
 
-    function showError(msg) {
+    function showError(key, extra = "") {
       const box = document.getElementById("error");
-      box.textContent = msg;
+      box.dataset.key = key; box.dataset.extra = extra;
+      box.textContent = t(key) + extra;
       box.style.display = "block";
     }
 
-    // ===== 2. 탭 전환: 하나만 보이게 =====
+    // ===== 2. 언어 바꾸기 (한국어 / 中文 / English) =====
+    function setLanguage(value) {
+      lang = ["ko", "zh", "en"].includes(value) ? value : "ko";
+      document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+      document.title = t("pageTitle");
+      document.querySelectorAll("[data-t]").forEach(el => { el.textContent = t(el.dataset.t); });
+      document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+      const box = document.getElementById("error");
+      if (box.dataset.key) box.textContent = t(box.dataset.key) + (box.dataset.extra || "");
+      try { localStorage.setItem("campus.language", lang); } catch (_) {}
+      if (rows.length) { drawYear(); drawMonth(); }  // 그래프 글자도 다시 그림
+    }
+    document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => setLanguage(b.dataset.lang)));
+
+    // ===== 3. 탭 전환: 하나만 보이게 =====
     const tabs = document.querySelectorAll(".tab");
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
-        tabs.forEach(t => {
-          const on = t === tab;
-          t.setAttribute("aria-selected", on);
-          document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+        tabs.forEach(other => {
+          const on = other === tab;
+          other.setAttribute("aria-selected", on);
+          document.getElementById(other.getAttribute("aria-controls")).hidden = !on;
         });
         // 숨겨져 있던 그래프는 보일 때 크기를 다시 계산
         Object.values(charts).forEach(c => c.resize());
       });
     });
 
-    // ===== 3. 값 꺼내기 (필터 + 결측 처리) =====
+    // ===== 4. 값 꺼내기 (필터 + 결측 처리) =====
     // 관광지·구분·기간유형이 맞는 행만 고르고, 빈 값은 null(결측)로 둔다
     function series(place, group, type, periods) {
       return periods.map(p => {
@@ -170,11 +197,14 @@
       });
     }
 
-    function numberFmt(v) { return v == null ? "자료 없음" : v.toLocaleString("ko-KR") + "명"; }
+    function numberFmt(v) {
+      const locale = { ko: "ko-KR", zh: "zh-CN", en: "en-US" }[lang];
+      return v == null ? t("noData") : v.toLocaleString(locale) + t("people");
+    }
 
     function drawChart(id, type, periods, labels, group, xTitle) {
       const datasets = PLACES.map((place, i) => ({
-        label: place,
+        label: t("place_" + place),
         data: series(place, group, type, periods),
         borderColor: COLORS[i],
         backgroundColor: COLORS[i],
@@ -197,25 +227,31 @@
             x: { title: { display: true, text: xTitle } },
             y: {
               beginAtZero: true,
-              title: { display: true, text: "입장객 수 (만 명)" },
-              ticks: { callback: v => (v / 10000).toLocaleString("ko-KR") }
+              title: { display: true, text: t("yAxis") },
+              ticks: { callback: v => t("tick")(v) }
             }
           }
         }
       });
     }
 
-    function drawYear()  { drawChart("chart-year", "연도", YEARS, YEARS.map(y => y + "년"),
-                                     document.getElementById("year-group").value, "연도"); }
-    function drawMonth() { drawChart("chart-month", "월", MONTHS, MONTHS.map(m => Number(m.slice(5)) + "월"),
-                                     document.getElementById("month-group").value, "2025년 월"); }
+    function drawYear()  { drawChart("chart-year", "연도", YEARS, YEARS.map(y => t("yearLabel")(y)),
+                                     document.getElementById("year-group").value, t("xYear")); }
+    function drawMonth() { drawChart("chart-month", "월", MONTHS, MONTHS.map(m => t("monthLabel")(Number(m.slice(5)))),
+                                     document.getElementById("month-group").value, t("xMonth")); }
 
     document.getElementById("year-group").addEventListener("change", drawYear);
     document.getElementById("month-group").addEventListener("change", drawMonth);
 
-    // ===== 4. CSV 읽기 (Papa Parse) =====
+    // ===== 5. 처음 언어 정하기 =====
+    let saved = null;
+    try { saved = localStorage.getItem("campus.language"); } catch (_) {}
+    const requested = new URLSearchParams(location.search).get("lang");
+    setLanguage(["ko", "zh", "en"].includes(requested) ? requested : saved);
+
+    // ===== 6. CSV 읽기 (Papa Parse) =====
     if (typeof Papa === "undefined" || typeof Chart === "undefined") {
-      showError("라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.");
+      showError("errLib");
     } else {
       Papa.parse(CSV_URL, {
         download: true, header: true, skipEmptyLines: true,
@@ -223,15 +259,15 @@
           const need = ["관광지", "구분", "기간유형", "기간", "입장객수"];
           const fields = result.meta.fields || [];
           if (!need.every(f => fields.includes(f))) {
-            showError("CSV 형식이 올바르지 않습니다. 필요한 열: " + need.join(", "));
+            showError("errFormat", need.join(", "));
             return;
           }
           rows = result.data;
-          if (rows.length === 0) { showError("CSV에 데이터가 없습니다."); return; }
+          if (rows.length === 0) { showError("errEmpty"); return; }
           drawYear();
           drawMonth();
         },
-        error: () => showError("CSV 파일을 불러오지 못했습니다: " + CSV_URL)
+        error: () => showError("errLoad", CSV_URL)
       });
     }
   </script>

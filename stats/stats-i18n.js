@@ -127,3 +127,11 @@ Object.assign(I18N.en,{lead:'Compare brands and representative search interest b
 Object.assign(I18N.ko,{yTitle:'DJI · Insta360 연평균 검색 관심도 (2025)',yQ:'2025년 주간 지수 52개의 평균을 브랜드별 막대로 비교합니다.',brandLabel:'브랜드'});
 Object.assign(I18N.zh,{yTitle:'DJI与Insta360全年平均搜索热度（2025年）',yQ:'将2025年52周热度指数的平均值，以品牌柱状图对比。',brandLabel:'品牌'});
 Object.assign(I18N.en,{yTitle:'Annual average search interest: DJI vs Insta360 (2025)',yQ:'Compare each brand’s mean across 52 weekly interest indices in a bar chart.',brandLabel:'Brand'});
+
+// 그래프 ①의 질문과 링크 이름 (세 언어)
+Object.assign(I18N.ko,{yQ:'질문: 2025년 한 해 동안 DJI와 Insta360 중 어느 브랜드의 검색 관심도가 더 높았을까? (주간 지수 52개의 평균 비교)',lnkBrands:'브랜드 CSV',lnkCats:'대분류 CSV',lnkMethod:'정리 방법',lnkOrig:'원본 CSV',lnkTable:'데이터 표'});
+Object.assign(I18N.zh,{yQ:'问题：2025年全年，DJI和Insta360哪个品牌的搜索热度更高？（比较52周指数的平均值）',lnkBrands:'品牌 CSV',lnkCats:'大类 CSV',lnkMethod:'整理方法',lnkOrig:'原始 CSV',lnkTable:'数据表'});
+Object.assign(I18N.en,{yQ:'Question: Over 2025, which brand drew more search interest, DJI or Insta360? (mean of 52 weekly indices)',lnkBrands:'Brands CSV',lnkCats:'Categories CSV',lnkMethod:'Method',lnkOrig:'Original CSV',lnkTable:'Data table'});
+Object.assign(I18N.ko,{errFormat:'CSV 형식이 올바르지 않습니다. 열 이름·숫자(0–100)·기간·행 수를 확인해 주세요.',errEmpty:'CSV에 데이터 행이 없습니다.',errLoad:'CSV 파일을 불러오지 못했습니다. 파일 경로와 인터넷 연결을 확인해 주세요.'});
+Object.assign(I18N.zh,{errFormat:'CSV 格式不正确。请检查列名、数字（0–100）、期间和行数。',errEmpty:'CSV 中没有数据行。',errLoad:'无法读取 CSV 文件，请检查文件路径和网络连接。'});
+Object.assign(I18N.en,{errFormat:'The CSV format is not valid. Check the column names, numbers (0–100), periods and row count.',errEmpty:'The CSV has no data rows.',errLoad:'Could not load the CSV file. Check the file path and your connection.'});

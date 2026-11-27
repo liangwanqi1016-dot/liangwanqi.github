@@ -9,3 +9,6 @@
 .direction-pad button[data-direction=up]{grid-area:1/2}.direction-pad button[data-direction=left]{grid-area:2/1}.direction-pad button[data-direction=down]{grid-area:2/2}.direction-pad button[data-direction=right]{grid-area:2/3}
 .direction-pad svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .game-controls{flex-wrap:wrap}.game-controls button:disabled{opacity:.5;cursor:default}.trap-symbol{background:#ddd0bc;color:#79503b}
+
+/* A quiet, rounded play surface. */
+.game-stage{border-radius:18px;background:#f8f3e9}.game-stage:before{display:none}.game-card{border-radius:18px}.direction-pad button{border-radius:50%;background:#f5eddf;box-shadow:0 2px 0 #dfd0ba;transition:background .12s,transform .12s}.direction-pad button:active{transform:translateY(2px);box-shadow:none}.game-controls button{border-radius:12px}

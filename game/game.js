@@ -3,7 +3,7 @@ const copy={"ko": {"brand": "캠퍼스 다이어리", "skip": "본문으로 건�
 const canvas=document.querySelector('#gameCanvas'),ctx=canvas.getContext('2d');
 const COLS=20,ROWS=14,CELL=30,GOAL=12,DIRECTIONS={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}};
 const MOVE_MS=310;
-let previous=[],movedAt=0,animation=null;
+let previous=[],movedAt=0,animation=null,lastFrame=0;
 let language='ko',snake=[],direction={x:1,y:0},nextDirection={x:1,y:0},queued=false,food=[],score=0,best=0,state='ready',messageKey='ready',timer=null,started=0,elapsed=0;
 const start=document.querySelector('#startBtn'),pause=document.querySelector('#pauseBtn');
 function renderText(){const t=copy[language];document.querySelector('#score').textContent=score+' / '+GOAL;document.querySelector('#time').textContent=Math.floor(elapsed/60000)+':'+String(Math.floor(elapsed/1000)%60).padStart(2,'0');document.querySelector('#best').textContent=String(best);document.querySelector('#message').textContent=t[messageKey].replace('{score}',String(score));start.textContent=t[state==='ready'?'start':state==='playing'||state==='paused'?'restart':'again'];pause.textContent=t[state==='paused'?'resume':'pause'];pause.disabled=!['playing','paused'].includes(state)}
@@ -18,13 +18,21 @@ ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#95a383';ctx.lineWidth
 const head=points[0];if(head){ctx.fillStyle='#738461';ctx.beginPath();ctx.arc(head.x,head.y,13,0,Math.PI*2);ctx.fill();for(const side of [-1,1]){const x=head.x+direction.x*5-direction.y*side*5,y=head.y+direction.y*5+direction.x*side*5;ctx.fillStyle='#fffaf0';ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#403b30';ctx.beginPath();ctx.arc(x+direction.x,y+direction.y,1.7,0,Math.PI*2);ctx.fill()}}
 if(state==='paused'){ctx.fillStyle='rgba(248,243,233,.65)';ctx.fillRect(0,0,600,420);ctx.fillStyle='#79503b';ctx.font='600 27px system-ui,sans-serif';ctx.textAlign='center';ctx.fillText(copy[language].pause,300,215)}
 }
-function animate(now){animation=null;if(state!=='playing')return;draw(now);animation=requestAnimationFrame(animate)}
-function startAnimation(){if(animation===null)animation=requestAnimationFrame(animate)}
-function spawnFood(){const empty=[];for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++)if(!snake.some(p=>p.x===x&&p.y===y)&&!food.some(p=>p.x===x&&p.y===y))empty.push({x,y});while(food.length<6&&empty.length){const index=Math.floor(Math.random()*empty.length);food.push(empty.splice(index,1)[0])}}
+function advanceStars(dt){
+for(const p of food){
+if(!Number.isFinite(p.angle)){p.angle=Math.random()*Math.PI*2;p.wander=2+Math.random()*3}
+p.wander-=dt;if(p.wander<=0){p.angle+=(Math.random()-.5)*Math.PI;p.wander=2+Math.random()*3}
+const x=p.x+Math.cos(p.angle)*dt*.38,y=p.y+Math.sin(p.angle)*dt*.38;
+if(x<0||x>COLS-1||y<0||y>ROWS-1||snake.some(s=>Math.hypot(s.x-x,s.y-y)<.85)||food.some(other=>other!==p&&Math.hypot(other.x-x,other.y-y)<1)){p.angle+=Math.PI;continue}
+p.x=x;p.y=y;
+}}
+function animate(now){animation=null;if(state!=='playing')return;const dt=lastFrame?Math.min(.05,Math.max(0,(now-lastFrame)/1000)):0;lastFrame=now;advanceStars(dt);draw(now);animation=requestAnimationFrame(animate)}
+function startAnimation(){lastFrame=0;if(animation===null)animation=requestAnimationFrame(animate)}
+function spawnFood(){const empty=[];for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++)if(!snake.some(p=>p.x===x&&p.y===y)&&!food.some(p=>Math.hypot(p.x-x,p.y-y)<1))empty.push({x,y});while(food.length<6&&empty.length){const index=Math.floor(Math.random()*empty.length);food.push(empty.splice(index,1)[0])}}
 function stopTimer(){if(animation!==null)cancelAnimationFrame(animation);animation=null;if(timer!==null)clearTimeout(timer);timer=null}
 function setup(){stopTimer();snake=[{x:6,y:7},{x:5,y:7},{x:4,y:7},{x:3,y:7}];direction={x:1,y:0};nextDirection={x:1,y:0};queued=false;score=0;elapsed=0;previous=snake.map(p=>({...p}));movedAt=performance.now();food=[];spawnFood()}
 function finish(won){stopTimer();elapsed=performance.now()-started;state=won?'won':'over';messageKey=won?'won':'lost';best=Math.max(best,score);renderText();draw()}
-function step(){if(state!=='playing')return;previous=snake.map(p=>({...p}));movedAt=performance.now();direction=nextDirection;queued=false;const head={x:snake[0].x+direction.x,y:snake[0].y+direction.y};const foodIndex=food.findIndex(p=>p.x===head.x&&p.y===head.y);const eats=foodIndex!==-1;const body=eats?snake:snake.slice(0,-1);if(head.x<0||head.x>=COLS||head.y<0||head.y>=ROWS||body.some(p=>p.x===head.x&&p.y===head.y)){finish(false);return}snake.unshift(head);if(eats){food.splice(foodIndex,1);score++;best=Math.max(best,score);messageKey='eat';if(score>=GOAL){finish(true);return}spawnFood()}else snake.pop();elapsed=performance.now()-started;renderText();draw();timer=setTimeout(step,MOVE_MS)}
+function step(){if(state!=='playing')return;previous=snake.map(p=>({...p}));movedAt=performance.now();direction=nextDirection;queued=false;const head={x:snake[0].x+direction.x,y:snake[0].y+direction.y};const from=snake[0];const foodIndex=food.findIndex(p=>{const along=Math.max(0,Math.min(1,(p.x-from.x)*direction.x+(p.y-from.y)*direction.y));return Math.hypot(p.x-from.x-direction.x*along,p.y-from.y-direction.y*along)<.7});const eats=foodIndex!==-1;const body=eats?snake:snake.slice(0,-1);if(head.x<0||head.x>=COLS||head.y<0||head.y>=ROWS||body.some(p=>p.x===head.x&&p.y===head.y)){finish(false);return}snake.unshift(head);if(eats){food.splice(foodIndex,1);score++;best=Math.max(best,score);messageKey='eat';if(score>=GOAL){finish(true);return}spawnFood()}else snake.pop();elapsed=performance.now()-started;renderText();draw();timer=setTimeout(step,MOVE_MS)}
 function begin(){setup();state='playing';messageKey='running';started=performance.now();renderText();draw();startAnimation();timer=setTimeout(step,MOVE_MS)}
 function turn(name){if(state!=='playing'||queued||!DIRECTIONS[name])return;const next=DIRECTIONS[name];if((next.x===direction.x&&next.y===direction.y)||(next.x===-direction.x&&next.y===-direction.y))return;nextDirection={...next};queued=true}
 function togglePause(){if(state==='playing'){elapsed=performance.now()-started;stopTimer();state='paused';messageKey='paused'}else if(state==='paused'){started=performance.now()-elapsed;state='playing';messageKey='running';previous=snake.map(p=>({...p}));movedAt=performance.now();startAnimation();timer=setTimeout(step,MOVE_MS)}renderText();draw()}
